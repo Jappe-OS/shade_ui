@@ -70,17 +70,17 @@ class _ShadeTextState extends State<ShadeText> {
       case ShadeTextStyle.title:
         fontSize = 25;
         fontColor = context.watch<ShadeThemeProvider>().getCurrentThemeProperties().darkerTextColor;
-        fontWeight = FontWeight.bold;
+        fontWeight = FontWeight.w700;
         break;
       case ShadeTextStyle.title1:
         fontSize = 20;
         fontColor = context.watch<ShadeThemeProvider>().getCurrentThemeProperties().darkerTextColor;
-        fontWeight = FontWeight.bold;
+        fontWeight = FontWeight.w700;
         break;
       case ShadeTextStyle.title2:
         fontSize = 16;
         fontColor = context.watch<ShadeThemeProvider>().getCurrentThemeProperties().darkerTextColor;
-        fontWeight = FontWeight.bold;
+        fontWeight = FontWeight.w700;
         break;
       case null:
         fontSize = normalFontSize;
