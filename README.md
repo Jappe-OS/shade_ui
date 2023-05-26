@@ -32,7 +32,7 @@ flutter pub add provider
 This is needed for the theming system.
 
 ### 2. main.dart
-#### Setting theme properties
+#### 2.1 Setting theme properties
 In your 'main.dart' file, within the 'void main()' function, add the following code above the 'runApp()' function:
 ```dart
 ShadeTheme.setThemeProperties(arg0, arg1);
@@ -50,7 +50,7 @@ The commented '/*...*/' bit should be replaced with the constructor's parameters
 
 Both 'DarkThemeProperties' and 'LightThemeProperties' take in a 'ThemeProperties' object.
 
-#### Provider set-up
+#### 2.2 Provider set-up
 Now, we'll need to modify the 'runApp()' function within the 'void main()' function. This function takes in a 'Widget' type. Add a 'MultiProvider' and move the widget (from the old 'runApp()') to the 'child: ' parameter of the 'MultiProvider' object, make sure that the 'MultiProvider' object is inside the 'runApp()' function.
 Now, we can add this above the 'child: ' parameter:
 ```dart
