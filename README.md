@@ -46,7 +46,7 @@ The function needs a dark and a light theme's theme data, like this:
 ```dart
 ShadeTheme.setThemeProperties(DarkThemeProperties(ThemeProperties(/*...*/)), LightThemeProperties(ThemeProperties(/*...*/)));
 ```
-The commented '/*...*/' bit should be replaced with the constructor's parameters; see: [theming.dart](https://github.com/Jappe-OS/ShadeTheming/blob/master/lib/theming.dart).
+The commented '/*...*/' bit should be replaced with the constructor's parameters; see: [theming.dart](https://github.com/Jappe-OS/ShadeTheming/blob/master/lib/theming.dart). You can also use the 'DarkThemeProperties' and 'LightThemeProperties' 's '.getDefault()' function to get the default theme properties/data.
 
 Both 'DarkThemeProperties' and 'LightThemeProperties' take in a 'ThemeProperties' object.
 
