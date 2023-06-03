@@ -16,8 +16,10 @@
 
 library widgets;
 
+export 'buttons/shade_button_bar.dart';
 export 'buttons/shade_button.dart';
-export 'textFields/shade_textfield.dart';
+export 'other/shade_icon.dart';
+export 'sliders/shade_slider.dart';
 export 'switches/shade_switch.dart';
 export 'text/shade_text.dart';
-export 'other/shade_icon.dart';
+export 'textFields/shade_textfield.dart';
