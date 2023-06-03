@@ -20,6 +20,28 @@ import 'package:flutter/material.dart';
 import 'package:shade_theming/main.dart';
 import 'package:shade_ui/utils.dart';
 
+/// A custom border radius that can be used for widgets to
+/// enable/disable border radius from widgets.
+class ShadeBorderRadius {
+  final bool tl, tr, bl, br;
+
+  BorderRadius usingDefault() {
+    Radius def = Radius.circular(Utils.getDefaultBorderRadius());
+
+    return BorderRadius.only(
+      topLeft: tl ? def : Radius.zero,
+      topRight: tr ? def : Radius.zero,
+      bottomLeft: bl ? def : Radius.zero,
+      bottomRight: br ? def : Radius.zero,
+    );
+  }
+
+  ShadeBorderRadius(this.tl, this.tr, this.bl, this.br);
+
+  static ShadeBorderRadius all() => ShadeBorderRadius(true, true, true, true);
+  static ShadeBorderRadius none() => ShadeBorderRadius(false, false, false, false);
+}
+
 /// The base button widget, any color other than [backgroundColor] should not be transparent because that's already determined by this class.
 class ButtonBase extends StatefulWidget {
   /// The widget inside the button itself.
@@ -46,6 +68,9 @@ class ButtonBase extends StatefulWidget {
   /// The alignment of the button.
   final Alignment? alignment;
 
+  /// Select which sides have rounded corners.
+  final ShadeBorderRadius? borderRadius;
+
   /// The [Function] is called when the button is pressed.
   final Function()? onPress;
 
@@ -59,6 +84,7 @@ class ButtonBase extends StatefulWidget {
       this.height,
       this.padding,
       this.alignment,
+      this.borderRadius,
       this.onPress})
       : super(key: key);
 
@@ -71,7 +97,7 @@ class _ButtonBaseState extends State<ButtonBase> {
   @override
   Widget build(BuildContext context) {
     final double height = widget.height ?? Utils.getSigleLineElementHeight();
-    final BorderRadius br = BorderRadius.circular(Utils.getDefaultBorderRadius());
+    final BorderRadius br = widget.borderRadius == null ? BorderRadius.circular(Utils.getDefaultBorderRadius()) : widget.borderRadius!.usingDefault();
 
     return Align(
       alignment: widget.alignment ?? Alignment.topLeft,

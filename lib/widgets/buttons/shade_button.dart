@@ -34,10 +34,13 @@ class ShadeButton extends StatefulWidget {
   /// Whether the button is marked as the primary alternative.
   final bool? isPrimary;
 
+  /// Select which sides have rounded corners.
+  final ShadeBorderRadius? borderRadius;
+
   /// This [Function] is called when the button is pressed.
   final Function()? onPress;
 
-  const ShadeButton({Key? key, this.text, this.icon, this.isPrimary, this.onPress}) : super(key: key);
+  const ShadeButton({Key? key, this.text, this.icon, this.isPrimary, this.borderRadius, this.onPress}) : super(key: key);
 
   @override
   _ShadeButtonState createState() => _ShadeButtonState();
@@ -91,6 +94,7 @@ class _ShadeButtonState extends State<ShadeButton> {
       hoverColor: buttonHighlight,
       splashColor: buttonHighlight,
       onPress: widget.onPress,
+      borderRadius: widget.borderRadius,
       child: child(),
     );
   }
