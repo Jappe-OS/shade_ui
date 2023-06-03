@@ -29,7 +29,7 @@ class ShadeButtonBarItem {
   ShadeButtonBarItem({this.text, this.icon, this.action});
 }
 
-/// A button that can contain text or an icon, by ShadeUI.
+/// A button bar that can contain multiple buttons, by ShadeUI.
 class ShadeButtonBar extends StatefulWidget {
   /// The items that the bar will contain.
   final List<ShadeButtonBarItem> items;
@@ -43,7 +43,7 @@ class ShadeButtonBar extends StatefulWidget {
   _ShadeButtonBarState createState() => _ShadeButtonBarState();
 }
 
-/// The [State] class for [ShadeButton].
+/// The [State] class for [ShadeButtonBar].
 class _ShadeButtonBarState extends State<ShadeButtonBar> {
   int? selected;
   List<ShadeButton> buttons = [];
