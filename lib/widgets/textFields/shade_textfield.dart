@@ -53,7 +53,7 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Utils.getSigleLineElementHeight(),
+      height: SHUI_SINGLE_LINE_ELEMENT_HEIGHT,
       child: TextField(
         autofocus: widget.autoFocus ?? false,
         readOnly: widget.readOnly ?? false,
@@ -67,10 +67,10 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
           isDense: true,
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 0.7, color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().borderColor),
-              borderRadius: BorderRadius.circular(Utils.getDefaultBorderRadius())),
+              borderRadius: BorderRadius.circular(SHUI_DEFAULT_BORDER_RADIUS)),
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 1.7, color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor),
-              borderRadius: BorderRadius.circular(Utils.getDefaultBorderRadius())),
+              borderRadius: BorderRadius.circular(SHUI_DEFAULT_BORDER_RADIUS)),
         ),
       ),
     );

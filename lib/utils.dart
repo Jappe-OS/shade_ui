@@ -14,16 +14,14 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Utilities
-class Utils {
+/// Height of buttons, textfields, etc.
+const SHUI_SINGLE_LINE_ELEMENT_HEIGHT = 35.0;
 
-  /// Returns the normal height of an UI element.
-  static double getSigleLineElementHeight() {
-    return 35;
-  }
+/// Default border radius used for elements.
+const SHUI_DEFAULT_BORDER_RADIUS = 10.0;
 
-  /// Returns the border radius used by most widgets.
-  static double getDefaultBorderRadius() {
-    return 10;
-  }
-}
+/// Optimal padding for UI elements when close to eachother.
+const SHUI_OPTIMAL_UI_PADDING = 5.0;
+
+/// Optimal transparency for transparent elements.
+const SHUI_OPTIMAL_ELEMENT_OPACITY = 0.6;

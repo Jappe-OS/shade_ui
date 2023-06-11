@@ -26,7 +26,7 @@ class ShadeBorderRadius {
   final bool tl, tr, bl, br;
 
   BorderRadius usingDefault() {
-    Radius def = Radius.circular(Utils.getDefaultBorderRadius());
+    Radius def = Radius.circular(SHUI_DEFAULT_BORDER_RADIUS);
 
     return BorderRadius.only(
       topLeft: tl ? def : Radius.zero,
@@ -96,8 +96,9 @@ class ButtonBase extends StatefulWidget {
 class _ButtonBaseState extends State<ButtonBase> {
   @override
   Widget build(BuildContext context) {
-    final double height = widget.height ?? Utils.getSigleLineElementHeight();
-    final BorderRadius br = widget.borderRadius == null ? BorderRadius.circular(Utils.getDefaultBorderRadius()) : widget.borderRadius!.usingDefault();
+    final double height = widget.height ?? SHUI_SINGLE_LINE_ELEMENT_HEIGHT;
+    final BorderRadius br =
+        widget.borderRadius == null ? BorderRadius.circular(SHUI_DEFAULT_BORDER_RADIUS) : widget.borderRadius!.usingDefault();
 
     return Align(
       alignment: widget.alignment ?? Alignment.topLeft,
