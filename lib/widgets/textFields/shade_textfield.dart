@@ -76,7 +76,7 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
         decoration: InputDecoration(
           hintText: widget.hintText,
           border: const OutlineInputBorder(),
-          contentPadding: const EdgeInsets.only(left: 7.5, right: 7.5),
+          contentPadding: const EdgeInsets.only(left: 7.5, right: 7.5, top: 10, bottom: 10),
           isDense: true,
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 0.7, color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().borderColor),
