@@ -62,8 +62,10 @@ class _ShadeSliderState extends State<ShadeSlider> {
         data: SliderTheme.of(context).copyWith(
           trackHeight: 5,
           thumbShape: RoundSliderThumbShape(
-            enabledThumbRadius: 0.0,
             disabledThumbRadius: 0.0,
+          ),
+          overlayShape: RoundSliderOverlayShape(
+            overlayRadius: 0.0,
           ),
         ),
         child: Slider(
