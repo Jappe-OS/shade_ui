@@ -20,6 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shade_theming/shade_theming.dart';
 
+import '../../utils.dart';
+
 /// A slider that can hold a float/double value, by ShadeUI.
 class ShadeSlider extends StatefulWidget {
   /// The current value of the slider, thumb is drawn at a position
@@ -54,17 +56,27 @@ class _ShadeSliderState extends State<ShadeSlider> {
   Widget build(BuildContext context) {
     Color accent = context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor;
 
-    return Slider(
-      value: widget.value,
-      min: widget.min,
-      max: widget.max,
-      autofocus: widget.autoFocus,
-      divisions: widget.divisions,
-      thumbColor: accent,
-      activeColor: accent,
-      inactiveColor: accent.withOpacity(0.7),
-      secondaryActiveColor: Colors.white.withOpacity(0.5),
-      onChanged: widget.onChanged,
+    return SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        trackHeight: SHUI_SINGLE_LINE_ELEMENT_HEIGHT,
+        thumbShape: RoundSliderThumbShape(
+          enabledThumbRadius: 0.0,
+          disabledThumbRadius: 0.0,
+        ),
+      ),
+      child: Slider(
+        value: widget.value,
+        min: widget.min,
+        max: widget.max,
+        autofocus: widget.autoFocus,
+        divisions: widget.divisions,
+        thumbColor: accent,
+        activeColor: accent,
+        inactiveColor: accent.withOpacity(0.7),
+        secondaryActiveColor: Colors.white.withOpacity(0.5),
+        mouseCursor: SystemMouseCursors.alias,
+        onChanged: widget.onChanged,
+      ),
     );
   }
 }

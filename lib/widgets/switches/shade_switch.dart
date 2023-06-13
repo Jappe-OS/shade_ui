@@ -19,6 +19,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shade_theming/main.dart';
+import 'package:shade_ui/utils.dart';
 
 /// A simple switch that can be toggled on and off, by ShadeUI.
 class ShadeSwitch extends StatefulWidget {
@@ -38,12 +39,21 @@ class ShadeSwitch extends StatefulWidget {
 class _ShadeSwitchState extends State<ShadeSwitch> {
   @override
   Widget build(BuildContext context) {
-    return Switch(
-      onChanged: widget.onChanged,
-      value: widget.value,
-      mouseCursor: SystemMouseCursors.alias,
-      activeColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor,
-      activeTrackColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor.withOpacity(0.5),
+    return SizedBox(
+      height: SHUI_SINGLE_LINE_ELEMENT_HEIGHT,
+      child: SwitchTheme(
+        data: SwitchThemeData(
+          thumbColor: MaterialStateProperty.all(Colors.transparent),
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+        ),
+        child: Switch(
+          onChanged: widget.onChanged,
+          value: widget.value,
+          mouseCursor: SystemMouseCursors.alias,
+          activeColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor,
+          activeTrackColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor.withOpacity(0.5),
+        ),
+      ),
     );
   }
 }

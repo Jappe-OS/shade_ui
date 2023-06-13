@@ -27,10 +27,19 @@ class ShadeTextfield extends StatefulWidget {
   final String? hintText;
 
   /// Whether to automatically focus the textfield.
-  final bool? autoFocus;
+  final bool autoFocus;
 
   /// Whther the content is modifiable.
-  final bool? readOnly;
+  final bool readOnly;
+
+  /// Character used for obscuring text if [obscureText] is true.
+  final String obscuringCharacter;
+
+  /// Whether to hide the text being edited (e.g., for passwords).
+  final bool obscureText;
+
+  /// Whether to enable autocorrection.
+  final bool autocorrect;
 
   /// This [Function] is called when the textfield is submitted.
   final Function(String)? onSubmitted;
@@ -41,7 +50,8 @@ class ShadeTextfield extends StatefulWidget {
   /// This [Function] is called when the content of the textfield has changed.
   final Function(String)? onChanged;
 
-  const ShadeTextfield({Key? key, this.hintText, this.autoFocus, this.readOnly, this.onSubmitted, this.onEditingComplete, this.onChanged})
+  const ShadeTextfield(
+      {Key? key, this.hintText, this.autoFocus = false, this.readOnly = false, this.obscuringCharacter = '•', this.obscureText = false, this.autocorrect = true, this.onSubmitted, this.onEditingComplete, this.onChanged})
       : super(key: key);
 
   @override
@@ -55,15 +65,18 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
     return SizedBox(
       height: SHUI_SINGLE_LINE_ELEMENT_HEIGHT,
       child: TextField(
-        autofocus: widget.autoFocus ?? false,
-        readOnly: widget.readOnly ?? false,
+        autofocus: widget.autoFocus,
+        readOnly: widget.readOnly,
+        obscuringCharacter: widget.obscuringCharacter,
+        obscureText: widget.obscureText,
+        autocorrect: widget.autocorrect,
         onSubmitted: widget.onSubmitted,
         onEditingComplete: widget.onEditingComplete,
         onChanged: widget.onChanged,
         decoration: InputDecoration(
           hintText: widget.hintText,
           border: const OutlineInputBorder(),
-          contentPadding: const EdgeInsets.all(7.5),
+          contentPadding: const EdgeInsets.only(left: 7.5, right: 7.5),
           isDense: true,
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 0.7, color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().borderColor),
@@ -71,6 +84,9 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 1.7, color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor),
               borderRadius: BorderRadius.circular(SHUI_DEFAULT_BORDER_RADIUS)),
+        ),
+        style: TextStyle(
+          color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor, // Set the desired text color
         ),
       ),
     );
