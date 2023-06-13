@@ -84,9 +84,12 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 1.7, color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor),
               borderRadius: BorderRadius.circular(SHUI_DEFAULT_BORDER_RADIUS)),
+          hintStyle: TextStyle(
+            color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().secondaryTextColor,
+          ),
         ),
         style: TextStyle(
-          color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor, // Set the desired text color
+          color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
         ),
       ),
     );

@@ -56,26 +56,29 @@ class _ShadeSliderState extends State<ShadeSlider> {
   Widget build(BuildContext context) {
     Color accent = context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor;
 
-    return SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        trackHeight: SHUI_SINGLE_LINE_ELEMENT_HEIGHT,
-        thumbShape: RoundSliderThumbShape(
-          enabledThumbRadius: 0.0,
-          disabledThumbRadius: 0.0,
+    return SizedBox(
+      height: SHUI_SINGLE_LINE_ELEMENT_HEIGHT,
+      child: SliderTheme(
+        data: SliderTheme.of(context).copyWith(
+          trackHeight: 5,
+          thumbShape: RoundSliderThumbShape(
+            enabledThumbRadius: 0.0,
+            disabledThumbRadius: 0.0,
+          ),
         ),
-      ),
-      child: Slider(
-        value: widget.value,
-        min: widget.min,
-        max: widget.max,
-        autofocus: widget.autoFocus,
-        divisions: widget.divisions,
-        thumbColor: accent,
-        activeColor: accent,
-        inactiveColor: accent.withOpacity(0.7),
-        secondaryActiveColor: Colors.white.withOpacity(0.5),
-        mouseCursor: SystemMouseCursors.alias,
-        onChanged: widget.onChanged,
+        child: Slider(
+          value: widget.value,
+          min: widget.min,
+          max: widget.max,
+          autofocus: widget.autoFocus,
+          divisions: widget.divisions,
+          thumbColor: accent,
+          activeColor: accent,
+          inactiveColor: accent.withOpacity(0.7),
+          secondaryActiveColor: Colors.white.withOpacity(0.5),
+          mouseCursor: SystemMouseCursors.alias,
+          onChanged: widget.onChanged,
+        ),
       ),
     );
   }
