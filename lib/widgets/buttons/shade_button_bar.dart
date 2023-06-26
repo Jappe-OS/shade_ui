@@ -84,6 +84,7 @@ class _ShadeButtonBarState extends State<ShadeButtonBar> {
         icon: item.icon,
         isPrimary: index == selected,
         borderRadius: sbr,
+        hasBorder: true,
         onPress: () {
           setSelected(index);
           if (item.action != null) item.action!();

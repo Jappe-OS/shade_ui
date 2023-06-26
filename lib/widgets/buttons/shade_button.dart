@@ -37,10 +37,12 @@ class ShadeButton extends StatefulWidget {
   /// Select which sides have rounded corners.
   final ShadeBorderRadius? borderRadius;
 
+  final bool hasBorder;
+
   /// This [Function] is called when the button is pressed.
   final Function()? onPress;
 
-  const ShadeButton({Key? key, this.text, this.icon, this.isPrimary, this.borderRadius, this.onPress}) : super(key: key);
+  const ShadeButton({Key? key, this.text, this.icon, this.isPrimary, this.borderRadius, this.hasBorder = false, this.onPress}) : super(key: key);
 
   @override
   _ShadeButtonState createState() => _ShadeButtonState();
@@ -61,15 +63,13 @@ class _ShadeButtonState extends State<ShadeButton> {
 
       Widget wText = ShadeText(
         text: widget.text ?? "null",
-        customColor:
-            isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : accentColor,
+        customColor: isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : accentColor,
         style: ShadeTextStyle.normal,
         customFontWeight: FontWeight.w500,
       );
       Widget wIcon = ShadeIcon(
         icon: widget.icon ?? Icons.error,
-        customColor:
-            isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : accentColor,
+        customColor: isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : accentColor,
       );
 
       if (text && !icon) {
@@ -95,6 +95,7 @@ class _ShadeButtonState extends State<ShadeButton> {
       splashColor: buttonHighlight,
       onPress: widget.onPress,
       borderRadius: widget.borderRadius,
+      hasBorder: widget.hasBorder,
       child: child(),
     );
   }

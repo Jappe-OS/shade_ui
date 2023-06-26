@@ -17,7 +17,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-//import 'package:shade_theming/main.dart';
+import 'package:shade_theming/shade_theming.dart';
 import 'package:shade_ui/utils.dart';
 
 /// A custom border radius that can be used for widgets to
@@ -71,6 +71,9 @@ class ButtonBase extends StatefulWidget {
   /// Select which sides have rounded corners.
   final ShadeBorderRadius? borderRadius;
 
+  /// Controls whether the widget has a border.
+  final bool hasBorder;
+
   /// The [Function] is called when the button is pressed.
   final Function()? onPress;
 
@@ -85,6 +88,7 @@ class ButtonBase extends StatefulWidget {
       this.padding = const EdgeInsets.all(5),
       this.alignment = Alignment.topLeft,
       this.borderRadius,
+      this.hasBorder = false,
       this.onPress})
       : super(key: key);
 
@@ -106,10 +110,10 @@ class _ButtonBaseState extends State<ButtonBase> {
         height: height,
         decoration: BoxDecoration(
           borderRadius: br,
-          //border: Border.all(
-          //  width: 0.7,
-          //  color: ShadeTheme.getCurrentThemeProperties().borderColor,
-          //),
+          border: widget.hasBorder ? Border.all(
+            width: 0.7,
+            color: ShadeTheme.getCurrentThemeProperties().borderColor,
+          ) : null,
           color: widget.backgroundColor,
         ),
         child: Material(
