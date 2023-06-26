@@ -17,7 +17,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:shade_theming/main.dart';
+//import 'package:shade_theming/main.dart';
 import 'package:shade_ui/utils.dart';
 
 /// A custom border radius that can be used for widgets to
@@ -63,10 +63,10 @@ class ButtonBase extends StatefulWidget {
   final double? height;
 
   /// The padding of the button content; the empty space around the [child] widget.
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry padding;
 
   /// The alignment of the button.
-  final Alignment? alignment;
+  final Alignment alignment;
 
   /// Select which sides have rounded corners.
   final ShadeBorderRadius? borderRadius;
@@ -82,8 +82,8 @@ class ButtonBase extends StatefulWidget {
       required this.hoverColor,
       required this.splashColor,
       this.height,
-      this.padding,
-      this.alignment,
+      this.padding = const EdgeInsets.all(5),
+      this.alignment = Alignment.topLeft,
       this.borderRadius,
       this.onPress})
       : super(key: key);
@@ -101,15 +101,15 @@ class _ButtonBaseState extends State<ButtonBase> {
         widget.borderRadius == null ? BorderRadius.circular(SHUI_DEFAULT_BORDER_RADIUS) : widget.borderRadius!.usingDefault();
 
     return Align(
-      alignment: widget.alignment ?? Alignment.topLeft,
+      alignment: widget.alignment,
       child: Container(
         height: height,
         decoration: BoxDecoration(
           borderRadius: br,
-          border: Border.all(
-            width: 0.7,
-            color: ShadeTheme.getCurrentThemeProperties().borderColor,
-          ),
+          //border: Border.all(
+          //  width: 0.7,
+          //  color: ShadeTheme.getCurrentThemeProperties().borderColor,
+          //),
           color: widget.backgroundColor,
         ),
         child: Material(
@@ -122,7 +122,7 @@ class _ButtonBaseState extends State<ButtonBase> {
             borderRadius: br,
             onTap: widget.onPress,
             child: Padding(
-              padding: widget.padding ?? const EdgeInsets.all(5),
+              padding: widget.padding,
               child: widget.child,
             ),
           ),
