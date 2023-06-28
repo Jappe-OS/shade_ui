@@ -54,7 +54,17 @@ class ShadeTextfield extends StatefulWidget {
   final Function(String)? onChanged;
 
   const ShadeTextfield(
-      {Key? key, this.hintText, this.labelText, this.autoFocus = false, this.readOnly = false, this.obscuringCharacter = '•', this.obscureText = false, this.autocorrect = true, this.onSubmitted, this.onEditingComplete, this.onChanged})
+      {Key? key,
+      this.hintText,
+      this.labelText,
+      this.autoFocus = false,
+      this.readOnly = false,
+      this.obscuringCharacter = '•',
+      this.obscureText = false,
+      this.autocorrect = true,
+      this.onSubmitted,
+      this.onEditingComplete,
+      this.onChanged})
       : super(key: key);
 
   @override
@@ -63,6 +73,8 @@ class ShadeTextfield extends StatefulWidget {
 
 /// The [State] class for [ShadeTextfield].
 class _ShadeTextfieldState extends State<ShadeTextfield> {
+  bool _isFocused = false;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -73,9 +85,19 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
         obscuringCharacter: widget.obscuringCharacter,
         obscureText: widget.obscureText,
         autocorrect: widget.autocorrect,
-        onSubmitted: widget.onSubmitted,
+        onSubmitted: (s) {
+          if (widget.onSubmitted != null) widget.onSubmitted!(s);
+          setState(() {
+            _isFocused = false;
+          });
+        },
         onEditingComplete: widget.onEditingComplete,
         onChanged: widget.onChanged,
+        onTap: () {
+          setState(() {
+            _isFocused = true;
+          });
+        },
         decoration: InputDecoration(
           fillColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().transparentFillColor,
           hintText: widget.hintText,
@@ -93,7 +115,7 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
             color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().secondaryTextColor,
           ),
           labelStyle: TextStyle(
-            color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
+            color: _isFocused ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
           ),
         ),
         style: TextStyle(
