@@ -89,6 +89,7 @@ class _ShadeButtonState extends State<ShadeButton> {
     }
 
     return ButtonBase(
+      padding: EdgeInsets.only(top: 5, bottom: 5, left: 13, right: 13),
       backgroundColor: backgroundColor,
       highlightColor: buttonHighlight,
       hoverColor: buttonHighlight,
