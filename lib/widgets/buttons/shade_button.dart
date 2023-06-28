@@ -54,7 +54,7 @@ class _ShadeButtonState extends State<ShadeButton> {
   Widget build(BuildContext context) {
     final bool isPrimary = widget.isPrimary ?? false;
     final Color accentColor = context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor;
-    Color backgroundColor = isPrimary ? accentColor : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().backgroundColor2;
+    Color backgroundColor = isPrimary ? accentColor : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().transparentFillColor;
     Color buttonHighlight = isPrimary ? Colors.white : accentColor;
 
     Widget child() {
