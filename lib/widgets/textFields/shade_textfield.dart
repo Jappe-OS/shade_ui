@@ -90,8 +90,10 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
         onSubmitted: widget.onSubmitted,
         onEditingComplete: widget.onEditingComplete,
         onChanged: widget.onChanged,
+        cursorColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor,
         decoration: InputDecoration(
           fillColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().transparentFillColor,
+          filled: true,
           hintText: widget.hintText,
           labelText: widget.labelText,
           border: const OutlineInputBorder(),
