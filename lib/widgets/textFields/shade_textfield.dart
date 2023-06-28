@@ -79,25 +79,17 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: SHUI_SINGLE_LINE_ELEMENT_HEIGHT,
-      child: TextField(
+      child: Focus(
+        onFocusChange: (value) => setState(() => _isFocused = value),
+        child:TextField(
         autofocus: widget.autoFocus,
         readOnly: widget.readOnly,
         obscuringCharacter: widget.obscuringCharacter,
         obscureText: widget.obscureText,
         autocorrect: widget.autocorrect,
         onSubmitted: widget.onSubmitted,
-        onEditingComplete: () {
-          if (widget.onEditingComplete != null) widget.onEditingComplete!();
-          setState(() {
-            _isFocused = false;
-          });
-        },
+        onEditingComplete: widget.onEditingComplete,
         onChanged: widget.onChanged,
-        onTap: () {
-          setState(() {
-            _isFocused = true;
-          });
-        },
         decoration: InputDecoration(
           fillColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().transparentFillColor,
           hintText: widget.hintText,
@@ -123,7 +115,7 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
         style: TextStyle(
           color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
         ),
-      ),
+      ),),
     );
   }
 }
