@@ -65,7 +65,7 @@ class _ShadeButtonState extends State<ShadeButton> {
         text: widget.text ?? "null",
         customColor: isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
         style: ShadeTextStyle.normal,
-        customFontWeight: FontWeight.w500,
+        //customFontWeight: FontWeight.w500,
       );
       Widget wIcon = ShadeIcon(
         icon: widget.icon ?? Icons.error,
