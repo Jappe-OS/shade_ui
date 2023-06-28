@@ -55,7 +55,7 @@ class _ShadeButtonState extends State<ShadeButton> {
     final bool isPrimary = widget.isPrimary ?? false;
     final Color accentColor = context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor;
     Color backgroundColor = isPrimary ? accentColor : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().backgroundColor2;
-    Color buttonHighlight = isPrimary ? Colors.white : Colors.black.withOpacity(0.7);
+    Color buttonHighlight = isPrimary ? Colors.white : accentColor;
 
     Widget child() {
       bool text = widget.text != null;
@@ -63,13 +63,13 @@ class _ShadeButtonState extends State<ShadeButton> {
 
       Widget wText = ShadeText(
         text: widget.text ?? "null",
-        customColor: isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : accentColor,
+        customColor: isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
         style: ShadeTextStyle.normal,
         customFontWeight: FontWeight.w500,
       );
       Widget wIcon = ShadeIcon(
         icon: widget.icon ?? Icons.error,
-        customColor: isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : accentColor,
+        customColor: isPrimary ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().invertedTextColor : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
       );
 
       if (text && !icon) {
