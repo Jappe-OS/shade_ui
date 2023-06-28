@@ -85,13 +85,13 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
         obscuringCharacter: widget.obscuringCharacter,
         obscureText: widget.obscureText,
         autocorrect: widget.autocorrect,
-        onSubmitted: (s) {
-          if (widget.onSubmitted != null) widget.onSubmitted!(s);
+        onSubmitted: widget.onSubmitted,
+        onEditingComplete: () {
+          if (widget.onEditingComplete != null) widget.onEditingComplete!();
           setState(() {
             _isFocused = false;
           });
         },
-        onEditingComplete: widget.onEditingComplete,
         onChanged: widget.onChanged,
         onTap: () {
           setState(() {
@@ -115,7 +115,9 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
             color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().secondaryTextColor,
           ),
           labelStyle: TextStyle(
-            color: _isFocused ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
+            color: _isFocused
+                ? context.watch<ShadeThemeProvider>().getCurrentThemeProperties().accentColor
+                : context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
           ),
         ),
         style: TextStyle(
