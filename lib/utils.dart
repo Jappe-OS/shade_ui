@@ -18,7 +18,7 @@
 const SHUI_SINGLE_LINE_ELEMENT_HEIGHT = 35.0;
 
 /// Default border radius used for elements.
-const SHUI_DEFAULT_BORDER_RADIUS = 10.0;
+const SHUI_DEFAULT_BORDER_RADIUS = 5.0;
 
 /// Optimal padding for UI elements when close to eachother.
 const SHUI_OPTIMAL_UI_PADDING = 5.0;
