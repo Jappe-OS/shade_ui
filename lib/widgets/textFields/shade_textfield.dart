@@ -26,6 +26,9 @@ class ShadeTextfield extends StatefulWidget {
   /// Text shown when the textfield is empty.
   final String? hintText;
 
+  /// Indicates what the textbox is used for.
+  final String? labelText;
+
   /// Whether to automatically focus the textfield.
   final bool autoFocus;
 
@@ -51,7 +54,7 @@ class ShadeTextfield extends StatefulWidget {
   final Function(String)? onChanged;
 
   const ShadeTextfield(
-      {Key? key, this.hintText, this.autoFocus = false, this.readOnly = false, this.obscuringCharacter = '•', this.obscureText = false, this.autocorrect = true, this.onSubmitted, this.onEditingComplete, this.onChanged})
+      {Key? key, this.hintText, this.labelText, this.autoFocus = false, this.readOnly = false, this.obscuringCharacter = '•', this.obscureText = false, this.autocorrect = true, this.onSubmitted, this.onEditingComplete, this.onChanged})
       : super(key: key);
 
   @override
@@ -74,7 +77,9 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
         onEditingComplete: widget.onEditingComplete,
         onChanged: widget.onChanged,
         decoration: InputDecoration(
+          fillColor: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().transparentFillColor,
           hintText: widget.hintText,
+          labelText: widget.labelText,
           border: const OutlineInputBorder(),
           contentPadding: const EdgeInsets.only(left: 7.5, right: 7.5, top: 11, bottom: 11),
           isDense: true,
@@ -86,6 +91,9 @@ class _ShadeTextfieldState extends State<ShadeTextfield> {
               borderRadius: BorderRadius.circular(SHUI_DEFAULT_BORDER_RADIUS)),
           hintStyle: TextStyle(
             color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().secondaryTextColor,
+          ),
+          labelStyle: TextStyle(
+            color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().normalTextColor,
           ),
         ),
         style: TextStyle(
