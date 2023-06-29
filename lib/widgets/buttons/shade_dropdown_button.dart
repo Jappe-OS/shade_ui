@@ -21,12 +21,12 @@ import 'package:shade_theming/shade_theming.dart';
 import '../text/shade_text.dart';
 
 /// A dropdown button that can used to select a single item from multiple.
-class CustomDropdownButton<T> extends StatelessWidget {
+class ShadeDropdown<T> extends StatelessWidget {
   final T value;
   final List<T> items;
   final ValueChanged<T?> onChanged;
 
-  const CustomDropdownButton({
+  const ShadeDropdown({
     Key? key,
     required this.value,
     required this.items,
