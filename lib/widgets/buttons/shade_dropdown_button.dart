@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shade_theming/shade_theming.dart';
+import 'package:shade_ui/utils.dart';
 
 import '../text/shade_text.dart';
 
@@ -37,9 +38,14 @@ class ShadeDropdown<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 35,
-      child: DropdownButton<T>(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(SHUI_DEFAULT_BORDER_RADIUS),
+        color: context.watch<ShadeThemeProvider>().getCurrentThemeProperties().transparentFillColor,
+      ),
+      child: Padding(padding: EdgeInsets.only(top: 5, bottom: 5, left: 13, right: 13), child:DropdownButton<T>(
         value: value,
         onChanged: onChanged,
+        underline: null,
         items: items.map((T item) {
           return DropdownMenuItem<T>(
             value: item,
@@ -50,7 +56,7 @@ class ShadeDropdown<T> extends StatelessWidget {
             ),
           );
         }).toList(),
-      ),
+      ),),
     );
   }
 }
