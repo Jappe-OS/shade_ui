@@ -18,6 +18,7 @@ library widgets;
 
 export 'buttons/shade_button_bar.dart';
 export 'buttons/shade_button.dart';
+export 'buttons/shade_dropdown_button.dart';
 export 'other/shade_divider.dart';
 export 'other/shade_icon.dart';
 export 'other/shade_menu_strip.dart';
