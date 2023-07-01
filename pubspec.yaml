@@ -12,8 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_menu: ^0.4.1
-  pluto_menu_bar: ^3.0.1
   provider: ^6.0.3
 
   shade_theming:

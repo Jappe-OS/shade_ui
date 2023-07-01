@@ -50,12 +50,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "flutter_menu",
-      "rootUri": "file:///C:/Users/jaspe/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_menu-0.4.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "flutter_test",
       "rootUri": "file:///C:/FlutterSDK/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -102,12 +96,6 @@
       "rootUri": "file:///C:/Users/jaspe/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "pluto_menu_bar",
-      "rootUri": "file:///C:/Users/jaspe/AppData/Local/Pub/Cache/hosted/pub.dev/pluto_menu_bar-3.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
     },
     {
       "name": "provider",
@@ -176,7 +164,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2023-06-28T16:51:20.222276Z",
+  "generated": "2023-07-01T07:24:27.008173Z",
   "generator": "pub",
   "generatorVersion": "3.0.5"
 }

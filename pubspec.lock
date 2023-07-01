@@ -62,14 +62,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  flutter_menu:
-    dependency: "direct main"
-    description:
-      name: flutter_menu
-      sha256: "5c26765265ed7c247a170d6f7386844e7f599bb7591f1196f4882f4489ce4837"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -131,14 +123,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
-  pluto_menu_bar:
-    dependency: "direct main"
-    description:
-      name: pluto_menu_bar
-      sha256: "154a9907b0758b804fb0f5bcfb0a28f504af4349124bf7d7b5aa815a2dde820a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   provider:
     dependency: "direct main"
     description:
@@ -219,4 +203,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=3.0.0 <4.0.0"
-  flutter: ">=2.5.0"
+  flutter: ">=1.16.0"
