@@ -131,15 +131,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
-  shade_theming:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: master
-      resolved-ref: "2153c7dca9c5d6f2b7caedd16bff3b35f52fd9b7"
-      url: "https://github.com/Jappe-OS/ShadeTheming.git"
-    source: git
-    version: "1.0.0+1"
   sky_engine:
     dependency: transitive
     description: flutter

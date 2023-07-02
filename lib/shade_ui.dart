@@ -1,6 +1,35 @@
+//  ShadeUI, A UI system for JappeOS apps.
+//  Copyright (C) 2023  The JappeOS team.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as
+//  published by the Free Software Foundation, either version 3 of the
+//  License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Creates a ShadeApp (MaterialApp).
+///
+/// At least one of [home], [routes], [onGenerateRoute], or [builder] must be non-null.
+/// If only [routes] is given, it must include an entry for the [Navigator.defaultRouteName] (/),
+/// since that is the route used when the application is launched with an intent that
+/// specifies an otherwise unsupported route.
+///
+/// The [MaterialApp] class creates an instance of [WidgetsApp].
+///
+/// The boolean arguments, [routes], and [navigatorObservers], must not be null.
+///
+/// Theme cannot currently be modified via this class; see [Provider] and [ShadeTheme] to
+/// change/listen to theme properties in runtime.
 class ShadeApp extends StatelessWidget {
   final GlobalKey<NavigatorState>? navigatorKey;
   final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
@@ -114,9 +143,30 @@ class ShadeApp extends StatelessWidget {
   }
 }
 
+/// Contains theme related properties.'
+/// From ShadeUI.
+///
+/// * **Use this class in UI:**
+/// 
+/// The following example shows a way to listen to theme changes
+/// (mostly used in custom widgets), and a way to set theme
+/// properties runtime and notify all listeners.
+/// 
+/// ```dart
+/// var themeProvider = Provider.of<ShadeTheme>(context);
+///
+/// //...
+/// 
+/// // To listen
+/// /*...*/themeProvider.accent;
+/// // To set
+/// /*...*/themeProvider.accent = ShadeThemeAccent.blue;
+/// ```
 class ShadeTheme extends ChangeNotifier {
   ShadeThemeAccent _accent = ShadeThemeAccent.blue;
+  /// Get the current accent/primary color of the UI.
   ShadeThemeAccent get accent => _accent;
+  /// Set the current accent/primary color of the UI.
   set accent(ShadeThemeAccent acc) {
     _accent = acc;
     notifyListeners();
@@ -124,40 +174,42 @@ class ShadeTheme extends ChangeNotifier {
 
   static const _kDefaultBorderRad = 10.0;
 
+  /// Light theme data to assign to [MaterialApp]s 'theme' param.
   ThemeData light() {
-    return ThemeData(
-      useMaterial3: true,
-      brightness: Brightness.light,
-      colorSchemeSeed: accent.clr,
-      elevatedButtonTheme:
-          ElevatedButtonThemeData(style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
-      filledButtonTheme:
-          FilledButtonThemeData(style: FilledButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
-      outlinedButtonTheme:
-          OutlinedButtonThemeData(style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
-      textButtonTheme:
-          TextButtonThemeData(style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
-    );
+    return _buildTheme(Brightness.light);
   }
 
+  /// Dark theme data to assign to [MaterialApp]s 'darkTheme' param.
   ThemeData dark() {
+    return _buildTheme(Brightness.dark);
+  }
+
+  /// Builds the base theme using the input parameters.
+  /// 
+  /// Only the input parameters can change between the dark and
+  /// the light themes.
+  ThemeData _buildTheme(Brightness brightness) {
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: brightness,
       colorSchemeSeed: accent.clr,
-      elevatedButtonTheme:
-          ElevatedButtonThemeData(style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
-      filledButtonTheme:
-          FilledButtonThemeData(style: FilledButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
-      outlinedButtonTheme:
-          OutlinedButtonThemeData(style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+      filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       textButtonTheme:
           TextButtonThemeData(style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+      inputDecorationTheme:
+          const InputDecorationTheme(contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2), filled: true, isDense: true),
     );
   }
 }
 
+/// Contains accent colors used in the UI.
 class ShadeThemeAccent {
+  /// The [Color] of this [ShadeThemeAccent] instance.
   final Color clr;
   const ShadeThemeAccent(this.clr);
 

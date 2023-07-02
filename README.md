@@ -1,67 +1,55 @@
 # Shade UI
-An UI elements package used by JappeOS apps.
+A UI system used by JappeOS apps. Works alongside with material widgets.
+
+## Migrate from 1.0
+Here's a short tutorial on migrating from the old 1.0 version to this new version (2.x).
+
+1. Replace all Shade- widgets with material widgets. A button would have the `text` param, but on a material button, it would not be a named parameter, so remove `text:`, and you're done! Also, you may need to replace `onPress` with `onPressed` on several widgets. After that, there should not be a lot to do to use this version.
+2. Replace all `MaterialApp`'s with `ShadeApp`, and remove `theme` and `darkTheme` parameters (if present).
 
 ## How to use
-Want to use Shade UI in your Flutter project? Here's how.
+Want to use ShadeUI in your Flutter project? Here's how.
 
 ### 1. Add to pubspec.yaml
-Open the projects 'pubspec.yaml' file and add this under the 'dependencies' section:
+Open the projects `pubspec.yaml` file and add this under the `dependencies` section:
 ```yaml
 shade_ui:
   git:
     url: https://github.com/Jappe-OS/ShadeUI.git
-    ref: master
+    ref: master-2.0
 ```
-This will add the Shade UI's repositorys main branch as a dependency.
+This will add the Shade UI's repository's main branch as a dependency.
 
 
-Shade Theming should also be added to the 'dependencies' section:
-```yaml
-shade_theming:
-  git:
-    url: https://github.com/Jappe-OS/ShadeTheming.git
-    ref: master
-```
-Shade Theming is a package that allows you to theme the UI widgets.
-
-
-You'll then need to add the 'provider' package using the following command:
+You'll then need to add the `provider` package using the following command:
 ```
 flutter pub add provider
 ```
 This is needed for the theming system.
 
 ### 2. main.dart
-#### 2.1 Setting theme properties
-In your 'main.dart' file, within the 'void main()' function, add the following code above the 'runApp()' function:
+Just replace your `MaterialApp` with `ShadeApp` (Won't work with Cupertino), also remember to import the ShadeUI package:
 ```dart
-ShadeTheme.setThemeProperties(arg0, arg1);
+import 'package:shade_ui/shade_ui.dart';
 ```
-* arg0: The dark theme's theme data.
-* arg1: The light theme's theme data.
+The `theme` and `darkTheme` parameters that you might've used, will not be usable with `ShadeApp`, remove those. The theme settings cannot be initialized in the `ShadeApp`'s constructor yet, to change theme properties in runtime, see `Provider` and `ShadeTheme`.
 
-NOTE: Make sure to import the correct packages.
-
-The function needs a dark and a light theme's theme data, like this:
+Here is a simple example of `ShadeApp`'s usage:
 ```dart
-ShadeTheme.setThemeProperties(DarkThemeProperties(ThemeProperties(/*...*/)), LightThemeProperties(ThemeProperties(/*...*/)));
+ShadeApp(
+  themeMode: ThemeMode.light,
+  home: Scaffold(
+    body: const Center(child: Text('Hello!')),
+    floatingActionButton: FloatingActionButton.large(onPressed: () {}, child: const Icon(Icons.add)),
+  ),
+),
 ```
-The commented '/*...*/' bit should be replaced with the constructor's parameters; see: [theming.dart](https://github.com/Jappe-OS/ShadeTheming/blob/master/lib/theming.dart). You can also use the 'DarkThemeProperties' and 'LightThemeProperties' 's '.getDefault()' function to get the default theme properties/data.
-
-Both 'DarkThemeProperties' and 'LightThemeProperties' take in a 'ThemeProperties' object.
-
-#### 2.2 Provider set-up
-Now, we'll need to modify the 'runApp()' function within the 'void main()' function. This function takes in a 'Widget' type. Add a 'MultiProvider' and move the widget (from the old 'runApp()') to the 'child: ' parameter of the 'MultiProvider' object, make sure that the 'MultiProvider' object is inside the 'runApp()' function.
-Now, we can add this above the 'child: ' parameter:
-```dart
-providers: [
-    ChangeNotifierProvider<ShadeThemeProvider>(create: (_) => ShadeThemeProvider())
-],
-```
-This will make the theme work correctly.
 
 ### 3. Done!
-You should now be able to use all of the Shade UI's widgets within your app!
+You should now be able to use all of the Shade UI within your app!
+
+* If you encounter any problems, join the Discord server (link on organization's main page).
+* If you encounter a bug, please report it to the `issues` section.
 
 Important resources:
 * [Shade UI](https://github.com/Jappe-OS/ShadeUI)
