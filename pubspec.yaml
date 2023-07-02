@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.0.3
+  pluto_menu_bar: ^3.0.1
 
 dev_dependencies:
   flutter_test:
