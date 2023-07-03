@@ -233,7 +233,7 @@ class ShadeTheme {
       textButtonTheme:
           TextButtonThemeData(style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       inputDecorationTheme:
-          const InputDecorationTheme(contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2), filled: true, isDense: true, floatingLabelStyle: TextStyle(height: 0, overflow: TextOverflow.visible), labelStyle: TextStyle(height: 0, overflow: TextOverflow.visible)),
+          const InputDecorationTheme(contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2), filled: true, isDense: true), // <- TODO: Make text field not take up more vertical space when it has a label!
     );
   }
 }
