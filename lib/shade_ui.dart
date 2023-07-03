@@ -146,7 +146,7 @@ class ShadeApp extends StatelessWidget {
 }
 
 /// Manages customised theme properties that modify the look of the UI.
-/// 
+///
 /// * **Use this class in UI:**
 ///
 /// The following example shows a way to listen to theme changes
@@ -191,6 +191,13 @@ class ShadeTheme {
 
   /// The opacity of a color on a blurred/transparent background.
   static const double clr_OnTranspOpacity = 0.5;
+
+  /// Get the second variant of the "Theme.of(ctx).**colorScheme.background**" color.
+  static Color clr_SchemeBackgroundVariant2(BuildContext ctx) {
+    Color originalBg = Theme.of(ctx).colorScheme.background;
+
+    return Theme.of(ctx).brightness == Brightness.light ? Color.fromARGB(255, originalBg.red - 40, originalBg.green - 40, originalBg.blue - 40) : Color.fromARGB(255, originalBg.red + 40, originalBg.green + 40, originalBg.blue + 40);
+  }
 
   //
   // +-----------------------------+
