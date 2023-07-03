@@ -196,7 +196,7 @@ class ShadeTheme {
   static Color clr_SchemeBackgroundVariant2(BuildContext ctx) {
     Color originalBg = Theme.of(ctx).colorScheme.background;
 
-    return Theme.of(ctx).brightness == Brightness.light ? Color.fromARGB(255, originalBg.red - 40, originalBg.green - 40, originalBg.blue - 40) : Color.fromARGB(255, originalBg.red + 40, originalBg.green + 40, originalBg.blue + 40);
+    return Theme.of(ctx).brightness == Brightness.light ? Color.fromARGB(255, originalBg.red - 20, originalBg.green - 20, originalBg.blue - 20) : Color.fromARGB(255, originalBg.red + 20, originalBg.green + 20, originalBg.blue + 20);
   }
 
   //
