@@ -233,7 +233,7 @@ class ShadeTheme {
       textButtonTheme:
           TextButtonThemeData(style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       inputDecorationTheme:
-          const InputDecorationTheme(contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2), filled: true, isDense: true, floatingLabelBehavior: FloatingLabelBehavior.always),
+          const InputDecorationTheme(contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2), filled: true, isDense: true, alignLabelWithHint: true),
     );
   }
 }
