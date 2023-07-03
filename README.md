@@ -5,7 +5,7 @@ A UI system used by JappeOS apps. Works alongside with material widgets.
 Here's a short tutorial on migrating from the old 1.0 version to this new version (2.x).
 
 1. Replace all Shade- widgets with material widgets. A button would have the `text` param, but on a material button, it would not be a named parameter, so remove `text:`, and you're done! Also, you may need to replace `onPress` with `onPressed` on several widgets. After that, there should not be a lot to do to use this version.
-2. Replace all `MaterialApp`'s with `ShadeApp`, and remove `theme` and `darkTheme` parameters (if present).
+2. Replace all `MaterialApp`'s with `ShadeApp`, and remove `theme` and `darkTheme` parameters (if present). However, you can customize the theme using the `customThemeProperties` parameter.
 
 ## How to use
 Want to use ShadeUI in your Flutter project? Here's how.
@@ -32,12 +32,12 @@ Just replace your `MaterialApp` with `ShadeApp` (Won't work with Cupertino), als
 ```dart
 import 'package:shade_ui/shade_ui.dart';
 ```
-The `theme` and `darkTheme` parameters that you might've used, will not be usable with `ShadeApp`, remove those. The theme settings cannot be initialized in the `ShadeApp`'s constructor yet, to change theme properties in runtime, see `Provider` and `ShadeTheme`.
+The `theme` and `darkTheme` parameters that you might've used, will not be usable with `ShadeApp`, remove those. Use `customThemeProperties` instead, to change theme properties in runtime, see `Provider` and `ShadeCustomThemeProperties`.
 
 Here is a simple example of `ShadeApp`'s usage:
 ```dart
 ShadeApp(
-  themeMode: ThemeMode.light,
+  customThemeProperties: ShadeCustomThemeProperties(ThemeMode.light, null),
   home: Scaffold(
     body: const Center(child: Text('Hello!')),
     floatingActionButton: FloatingActionButton.large(onPressed: () {}, child: const Icon(Icons.add)),

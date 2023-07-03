@@ -14,6 +14,8 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +33,7 @@ import 'package:provider/provider.dart';
 /// Theme cannot currently be modified via this class; see [Provider] and [ShadeTheme] to
 /// change/listen to theme properties in runtime.
 class ShadeApp extends StatelessWidget {
+  final ShadeCustomThemeProperties? customThemeProperties;
   final GlobalKey<NavigatorState>? navigatorKey;
   final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
   final Widget? home;
@@ -44,7 +47,6 @@ class ShadeApp extends StatelessWidget {
   final String title;
   final String Function(BuildContext)? onGenerateTitle;
   final Color? color;
-  final ThemeMode? themeMode;
   final Duration themeAnimationDuration;
   final Curve themeAnimationCurve;
   final Locale? locale;
@@ -65,6 +67,7 @@ class ShadeApp extends StatelessWidget {
 
   const ShadeApp(
       {Key? key,
+      this.customThemeProperties,
       this.navigatorKey,
       this.scaffoldMessengerKey,
       this.home,
@@ -78,7 +81,6 @@ class ShadeApp extends StatelessWidget {
       this.title = '',
       this.onGenerateTitle,
       this.color,
-      this.themeMode = ThemeMode.system,
       this.themeAnimationDuration = kThemeAnimationDuration,
       this.themeAnimationCurve = Curves.linear,
       this.locale,
@@ -101,12 +103,12 @@ class ShadeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (_) => ShadeTheme(),
+        create: (_) => customThemeProperties ?? ShadeCustomThemeProperties.setDefault(),
         builder: (context, child) {
-          var themeProvider = Provider.of<ShadeTheme>(context);
+          var themeProvider = Provider.of<ShadeCustomThemeProperties>(context);
           return MaterialApp(
-            theme: themeProvider.light(),
-            darkTheme: themeProvider.dark(),
+            theme: ShadeTheme.light(themeProvider),
+            darkTheme: ShadeTheme.dark(themeProvider),
             home: home,
             navigatorKey: navigatorKey,
             scaffoldMessengerKey: scaffoldMessengerKey,
@@ -120,7 +122,7 @@ class ShadeApp extends StatelessWidget {
             title: title,
             onGenerateTitle: onGenerateTitle,
             color: color,
-            themeMode: themeMode,
+            themeMode: themeProvider.themeMode,
             themeAnimationDuration: themeAnimationDuration,
             themeAnimationCurve: themeAnimationCurve,
             locale: locale,
@@ -143,56 +145,78 @@ class ShadeApp extends StatelessWidget {
   }
 }
 
-/// Contains theme related properties.'
-/// From ShadeUI.
-///
-/// * **Use this class in UI:**
+/// Manages customised theme properties that modify the look of the UI.
 /// 
+/// * **Use this class in UI:**
+///
 /// The following example shows a way to listen to theme changes
 /// (mostly used in custom widgets), and a way to set theme
 /// properties runtime and notify all listeners.
-/// 
+///
 /// ```dart
-/// var themeProvider = Provider.of<ShadeTheme>(context);
+/// var themeProvider = Provider.of<ShadeCustomThemeProperties>(context);
 ///
 /// //...
-/// 
+///
 /// // To listen
 /// /*...*/themeProvider.accent;
 /// // To set
 /// /*...*/themeProvider.accent = ShadeThemeAccent.blue;
 /// ```
-class ShadeTheme extends ChangeNotifier {
-  ShadeThemeAccent _accent = ShadeThemeAccent.blue;
-  /// Get the current accent/primary color of the UI.
-  ShadeThemeAccent get accent => _accent;
-  /// Set the current accent/primary color of the UI.
-  set accent(ShadeThemeAccent acc) {
-    _accent = acc;
+class ShadeCustomThemeProperties extends ChangeNotifier {
+  ThemeMode? _themeMode;
+  ThemeMode get themeMode => _themeMode ?? ThemeMode.system;
+  set themeMode(ThemeMode mode) {
+    _themeMode = mode;
     notifyListeners();
   }
+
+  ShadeThemeAccent? _accent;
+  ShadeThemeAccent get accent => _accent ?? ShadeThemeAccent.blue;
+  set accent(ShadeThemeAccent accent) {
+    _accent = accent;
+    notifyListeners();
+  }
+
+  ShadeCustomThemeProperties(this._themeMode, this._accent);
+
+  factory ShadeCustomThemeProperties.setDefault() => ShadeCustomThemeProperties(null, null);
+}
+
+/// Contains theme related properties.'
+/// From ShadeUI.
+class ShadeTheme {
+  /// Returns the version of the input color as a color that can be used on a transparent/blurred background.
+  static Color clr_OnTranspVersion(Color color) => color.withOpacity(clr_OnTranspOpacity);
+
+  /// The opacity of a color on a blurred/transparent background.
+  static const double clr_OnTranspOpacity = 0.5;
+
+  //
+  // +-----------------------------+
+  //
 
   static const _kDefaultBorderRad = 10.0;
 
   /// Light theme data to assign to [MaterialApp]s 'theme' param.
-  ThemeData light() {
-    return _buildTheme(Brightness.light);
+  static ThemeData light(ShadeCustomThemeProperties t) {
+    return _buildTheme(t, Brightness.light);
   }
 
   /// Dark theme data to assign to [MaterialApp]s 'darkTheme' param.
-  ThemeData dark() {
-    return _buildTheme(Brightness.dark);
+  static ThemeData dark(ShadeCustomThemeProperties t) {
+    return _buildTheme(t, Brightness.dark);
   }
 
   /// Builds the base theme using the input parameters.
-  /// 
+  ///
   /// Only the input parameters can change between the dark and
   /// the light themes.
-  ThemeData _buildTheme(Brightness brightness) {
+  static ThemeData _buildTheme(ShadeCustomThemeProperties t, Brightness brightness) {
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
-      colorSchemeSeed: accent.clr,
+      colorSchemeSeed: t.accent.clr,
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       filledButtonTheme: FilledButtonThemeData(
