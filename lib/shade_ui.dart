@@ -248,7 +248,11 @@ class ShadeTheme {
         style: ButtonStyle(
           padding: MaterialStatePropertyAll(EdgeInsets.zero),
         )
-      )
+      ),
+      sliderTheme: const SliderThemeData(
+        trackHeight: 6,
+        overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+      ),
     );
   }
 }
