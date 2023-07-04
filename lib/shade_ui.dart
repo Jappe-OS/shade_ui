@@ -244,6 +244,11 @@ class ShadeTheme {
           shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))
         ),
       ),
+      iconButtonTheme: const IconButtonThemeData(
+        style: ButtonStyle(
+          padding: MaterialStatePropertyAll(EdgeInsets.zero),
+        )
+      )
     );
   }
 }
