@@ -233,12 +233,12 @@ class ShadeTheme {
       textButtonTheme:
           TextButtonThemeData(style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       inputDecorationTheme:
-          const InputDecorationTheme(contentPadding: EdgeInsets.all(0), filled: true, isDense: true), // <- TODO: Make text field not take up more vertical space when it has a label!
+          const InputDecorationTheme(contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2), filled: true, isDense: true), // <- TODO: Make text field not take up more vertical space when it has a label!
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           isDense: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2),
+          contentPadding: EdgeInsets.zero,
         ),
         menuStyle: MenuStyle(
           shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))
