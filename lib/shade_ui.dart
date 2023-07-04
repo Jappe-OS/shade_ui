@@ -235,38 +235,10 @@ class ShadeTheme {
       inputDecorationTheme:
           const InputDecorationTheme(contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2), filled: true, isDense: true), // <- TODO: Make text field not take up more vertical space when it has a label!
       dropdownMenuTheme: DropdownMenuThemeData(
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           filled: true,
-          fillColor: Colors.red,
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(
-              width: 1,
-              color: Colors.black,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Colors.red),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 1,
-              color: Colors.blue,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Colors.red),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Colors.red),
-            borderRadius: BorderRadius.circular(10),
-          ),
           isDense: true,
-          iconColor: Colors.red,
-          contentPadding: const EdgeInsets.all(12),
+          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2),
         ),
         menuStyle: MenuStyle(
           shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))
