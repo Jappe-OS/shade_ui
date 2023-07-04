@@ -238,7 +238,7 @@ class ShadeTheme {
       textButtonTheme:
           TextButtonThemeData(style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2 - 2),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2 - 2.5),
         filled: true,
         isDense: true,
         border: OutlineInputBorder(
