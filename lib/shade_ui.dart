@@ -196,8 +196,13 @@ class ShadeTheme {
   static Color clr_SchemeBackgroundVariant2(BuildContext ctx) {
     Color originalBg = Theme.of(ctx).colorScheme.background;
 
-    return Theme.of(ctx).brightness == Brightness.light ? Color.fromARGB(255, originalBg.red - 20, originalBg.green - 20, originalBg.blue - 20) : Color.fromARGB(255, originalBg.red + 20, originalBg.green + 20, originalBg.blue + 20);
+    return Theme.of(ctx).brightness == Brightness.light
+        ? Color.fromARGB(255, originalBg.red - 20, originalBg.green - 20, originalBg.blue - 20)
+        : Color.fromARGB(255, originalBg.red + 20, originalBg.green + 20, originalBg.blue + 20);
   }
+
+  /// The maximum height that controls like a button can take up.
+  static double get spec_MaxControlHeight => 40.0;
 
   //
   // +-----------------------------+
@@ -232,26 +237,25 @@ class ShadeTheme {
           style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       textButtonTheme:
           TextButtonThemeData(style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
-      inputDecorationTheme:
-          const InputDecorationTheme(contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2), filled: true, isDense: true), // <- TODO: Make text field not take up more vertical space when it has a label!
+      inputDecorationTheme: InputDecorationTheme(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2),
+        filled: true,
+        isDense: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(_kDefaultBorderRad),
+        ),
+      ), // <- TODO: Make text field not take up more vertical space when it has a label!
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           isDense: true,
           contentPadding: EdgeInsets.zero,
         ),
-        menuStyle: MenuStyle(
-          shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))
-        ),
+        menuStyle: MenuStyle(shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       ),
-      iconButtonTheme: const IconButtonThemeData(
-        style: ButtonStyle(
-          padding: MaterialStatePropertyAll(EdgeInsets.zero),
-        )
-      ),
-      sliderTheme: const SliderThemeData(
+      sliderTheme: SliderThemeData(
         trackHeight: 6,
-        overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+        overlayShape: RoundSliderOverlayShape(overlayRadius: spec_MaxControlHeight / 2),
       ),
     );
   }
