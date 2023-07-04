@@ -197,8 +197,8 @@ class ShadeTheme {
     Color originalBg = Theme.of(ctx).colorScheme.background;
 
     return Theme.of(ctx).brightness == Brightness.light
-        ? Color.fromARGB(255, originalBg.red - 20, originalBg.green - 20, originalBg.blue - 20)
-        : Color.fromARGB(255, originalBg.red + 20, originalBg.green + 20, originalBg.blue + 20);
+        ? Color.fromARGB(255, originalBg.red - 17, originalBg.green - 17, originalBg.blue - 17)
+        : Color.fromARGB(255, originalBg.red + 17, originalBg.green + 17, originalBg.blue + 17);
   }
 
   /// The maximum height that controls like a button can take up.
