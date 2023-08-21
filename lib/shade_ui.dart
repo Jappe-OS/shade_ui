@@ -230,21 +230,21 @@ class ShadeTheme {
       brightness: brightness,
       colorSchemeSeed: t.accent.clr,
       elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+          style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+          style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
-      textButtonTheme:
-          TextButtonThemeData(style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+          style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+      textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2 - 2.5),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2/* - 2.5*/),
         filled: true,
         isDense: true,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_kDefaultBorderRad),
         ),
-      ), // <- TODO: Make text field not take up more vertical space when it has a label!
+      ),
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
