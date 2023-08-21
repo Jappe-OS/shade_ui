@@ -225,20 +225,30 @@ class ShadeTheme {
   /// Only the input parameters can change between the dark and
   /// the light themes.
   static ThemeData _buildTheme(ShadeCustomThemeProperties t, Brightness brightness) {
+    var buttonPadding = const EdgeInsets.symmetric(horizontal: 10, vertical: 11.5);
+
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
       colorSchemeSeed: t.accent.clr,
       elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+          style: ElevatedButton.styleFrom(
+              padding: buttonPadding,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+          style: FilledButton.styleFrom(
+              padding: buttonPadding,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+          style: OutlinedButton.styleFrom(
+              padding: buttonPadding,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+          style: TextButton.styleFrom(
+              padding: buttonPadding,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2/* - 2.5*/),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2 - 1),
         filled: true,
         isDense: true,
         border: OutlineInputBorder(
