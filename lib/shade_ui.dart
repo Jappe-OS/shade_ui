@@ -107,8 +107,8 @@ class ShadeApp extends StatelessWidget {
         builder: (context, child) {
           var themeProvider = Provider.of<ShadeCustomThemeProperties>(context);
           return MaterialApp(
-            theme: ShadeTheme.light(themeProvider),
-            darkTheme: ShadeTheme.dark(themeProvider),
+            theme: ShadeTheme.light(themeProvider, Theme.of(context).colorScheme),
+            darkTheme: ShadeTheme.dark(themeProvider, Theme.of(context).colorScheme),
             home: home,
             navigatorKey: navigatorKey,
             scaffoldMessengerKey: scaffoldMessengerKey,
@@ -209,45 +209,78 @@ class ShadeTheme {
   //
 
   static const _kDefaultBorderRad = 7.0;
+  static const _buttonPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 15.5);
 
   /// Light theme data to assign to [MaterialApp]s 'theme' param.
-  static ThemeData light(ShadeCustomThemeProperties t) {
-    return _buildTheme(t, Brightness.light);
+  static ThemeData light(ShadeCustomThemeProperties t, ColorScheme cs) {
+    return _buildTheme(t, Brightness.light, cs);
   }
 
   /// Dark theme data to assign to [MaterialApp]s 'darkTheme' param.
-  static ThemeData dark(ShadeCustomThemeProperties t) {
-    return _buildTheme(t, Brightness.dark);
+  static ThemeData dark(ShadeCustomThemeProperties t, ColorScheme cs) {
+    return _buildTheme(t, Brightness.dark, cs);
   }
 
   /// Builds the base theme using the input parameters.
   ///
   /// Only the input parameters can change between the dark and
   /// the light themes.
-  static ThemeData _buildTheme(ShadeCustomThemeProperties t, Brightness brightness) {
-    var buttonPadding = const EdgeInsets.symmetric(horizontal: 20, vertical: 15.5);
+  static ThemeData _buildTheme(ShadeCustomThemeProperties t, Brightness brightness, ColorScheme colorScheme) {
+    ButtonStyle commonButtonStyle = ButtonStyle(
+      padding: const MaterialStatePropertyAll(_buttonPadding),
+      shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad))),
+    );
 
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
       colorSchemeSeed: t.accent.clr,
+
+      // Buttons
+
       buttonTheme: const ButtonThemeData(height: 35),
+
       elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              padding: buttonPadding,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onSecondaryContainer,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+        ).merge(commonButtonStyle),
+      ),
+
       filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(
-              padding: buttonPadding,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+        style: FilledButton.styleFrom(
+          disabledBackgroundColor: colorScheme.onSurface.withOpacity(0.12),
+          backgroundColor: colorScheme.onSurface.withOpacity(0.1),
+          surfaceTintColor: colorScheme.onSurface.withOpacity(0.1),
+          foregroundColor: colorScheme.onSurface,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+        ).merge(commonButtonStyle),
+      ),
+
       outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-              padding: buttonPadding,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+        style: OutlinedButton.styleFrom(
+          foregroundColor: colorScheme.onSurface,
+        ).merge(commonButtonStyle),
+      ),
+
       textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-              padding: buttonPadding,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
+        style: TextButton.styleFrom(
+          iconColor: colorScheme.primary,
+          foregroundColor: colorScheme.primary,
+        ).merge(commonButtonStyle),
+      ),
+
+      segmentedButtonTheme: const SegmentedButtonThemeData(
+        style: ButtonStyle(
+          padding: MaterialStatePropertyAll(_buttonPadding),
+        ),
+      ),
+
+      // Text Input
+
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2 - 1),
         filled: true,
@@ -256,6 +289,7 @@ class ShadeTheme {
           borderRadius: BorderRadius.circular(_kDefaultBorderRad),
         ),
       ),
+
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
@@ -264,17 +298,18 @@ class ShadeTheme {
         ),
         menuStyle: MenuStyle(shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad)))),
       ),
+
+      // Slider
+
       sliderTheme: SliderThemeData(
         trackHeight: 6,
         overlayShape: RoundSliderOverlayShape(overlayRadius: spec_MaxControlHeight / 2),
       ),
+
+      // Switch
+
       switchTheme: SwitchThemeData(
         splashRadius: spec_MaxControlHeight / 2,
-      ),
-      segmentedButtonTheme: SegmentedButtonThemeData(
-        style: ButtonStyle(
-          padding: MaterialStatePropertyAll(buttonPadding),
-        ),
       ),
     );
   }
