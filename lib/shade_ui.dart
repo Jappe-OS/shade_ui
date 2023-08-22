@@ -225,13 +225,13 @@ class ShadeTheme {
   /// Only the input parameters can change between the dark and
   /// the light themes.
   static ThemeData _buildTheme(ShadeCustomThemeProperties t, Brightness brightness) {
-    var buttonPadding = const EdgeInsets.symmetric(horizontal: 20, vertical: 18);
+    var buttonPadding = const EdgeInsets.symmetric(horizontal: 20, vertical: 11.5);
 
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
       colorSchemeSeed: t.accent.clr,
-      //buttonTheme: const ButtonThemeData(height: 100),
+      buttonTheme: const ButtonThemeData(height: 35),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
               padding: buttonPadding,
