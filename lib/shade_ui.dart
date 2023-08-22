@@ -201,8 +201,8 @@ class ShadeTheme {
         : Color.fromARGB(255, originalBg.red + 17, originalBg.green + 17, originalBg.blue + 17);
   }
 
-  /// The maximum height that controls like a button can take up.
-  static double get spec_MaxControlHeight => 40.0;
+  /// The maximum height that "single line" controls like a button can take up.
+  static double get spec_MaxControlHeight => 35.0;
 
   //
   // +-----------------------------+
