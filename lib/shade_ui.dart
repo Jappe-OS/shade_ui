@@ -208,7 +208,7 @@ class ShadeTheme {
   // +-----------------------------+
   //
 
-  static const _kDefaultBorderRad = 10.0;
+  static const _kDefaultBorderRad = 7.0;
 
   /// Light theme data to assign to [MaterialApp]s 'theme' param.
   static ThemeData light(ShadeCustomThemeProperties t) {
@@ -270,6 +270,11 @@ class ShadeTheme {
       ),
       switchTheme: SwitchThemeData(
         splashRadius: spec_MaxControlHeight / 2,
+      ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          padding: MaterialStatePropertyAll(buttonPadding),
+        ),
       ),
     );
   }
