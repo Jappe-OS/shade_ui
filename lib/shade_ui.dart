@@ -231,7 +231,7 @@ class ShadeTheme {
       useMaterial3: true,
       brightness: brightness,
       colorSchemeSeed: t.accent.clr,
-      buttonTheme: const ButtonThemeData(height: 35),
+      buttonTheme: const ButtonThemeData(height: 100),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
               //padding: buttonPadding,
