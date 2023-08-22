@@ -268,6 +268,9 @@ class ShadeTheme {
         trackHeight: 6,
         overlayShape: RoundSliderOverlayShape(overlayRadius: spec_MaxControlHeight / 2),
       ),
+      switchTheme: SwitchThemeData(
+        splashRadius: spec_MaxControlHeight / 2,
+      ),
     );
   }
 }
