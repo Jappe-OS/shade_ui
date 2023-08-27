@@ -45,9 +45,9 @@
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///C:/Users/jaspe/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1",
+      "rootUri": "file:///C:/Users/jaspe/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "flutter_test",
@@ -161,10 +161,10 @@
       "name": "shade_ui",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-07-02T18:03:09.173429Z",
+  "generated": "2023-08-27T17:39:23.923014Z",
   "generator": "pub",
   "generatorVersion": "3.0.5"
 }
