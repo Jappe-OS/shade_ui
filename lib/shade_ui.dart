@@ -459,9 +459,10 @@ class ShadeTheme {
         ),
       ),
 
-      segmentedButtonTheme: const SegmentedButtonThemeData(
+      segmentedButtonTheme: SegmentedButtonThemeData(
         style: ButtonStyle(
-          padding: MaterialStatePropertyAll(_kButtonPadding),
+          padding: const MaterialStatePropertyAll(_kButtonPadding),
+          shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad))),
         ),
       ),
 
