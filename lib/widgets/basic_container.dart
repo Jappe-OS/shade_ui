@@ -23,12 +23,12 @@ import 'package:flutter/material.dart';
 /// The recommended background color is `colorScheme.background`, but multiple
 /// BasicContainers can be stacked on top of eachother.
 class BasicContainer extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   final double? width;
   final double? height;
   final EdgeInsetsGeometry? padding;
 
-  const BasicContainer({Key? key, required this.child, this.width, this.height, this.padding}) : super(key: key);
+  const BasicContainer({Key? key, this.child, this.width, this.height, this.padding}) : super(key: key);
 
   @override
   _BasicContainerState createState() => _BasicContainerState();
