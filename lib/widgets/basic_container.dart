@@ -35,7 +35,7 @@ class BasicContainer extends StatefulWidget {
 }
 
 class _BasicContainerState extends State<BasicContainer> {
-  static const _bgColorDelta = 0.1;
+  static const _bgColorDelta = 0.085;
 
   @override
   Widget build(BuildContext context) {
