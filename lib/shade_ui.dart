@@ -239,6 +239,8 @@ class ShadeTheme {
       return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
     }
 
+    final accentifiedBackground = surfaceBackgroundColor(ShadeUIColors.porcelain);
+
     final colorScheme = ColorScheme.fromSeed(
       seedColor: t.primary,
       error: ShadeUIColors.light.error,
@@ -253,7 +255,7 @@ class ShadeTheme {
       onSecondary: contrastColor(secondary),
       secondaryContainer: secondaryContainer,
       onSecondaryContainer: contrastColor(secondaryContainer),
-      background: surfaceBackgroundColor(ShadeUIColors.porcelain),
+      background: accentifiedBackground,
       onBackground: ShadeUIColors.jet,
       surface: Colors.white,
       onSurface: ShadeUIColors.jet,
@@ -294,6 +296,8 @@ class ShadeTheme {
       return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
     }
 
+    final accentifiedBackground = surfaceBackgroundColor(ShadeUIColors.darkJet);
+
     final colorScheme = ColorScheme.fromSeed(
       seedColor: t.primary,
       error: ShadeUIColors.dark.error,
@@ -308,7 +312,7 @@ class ShadeTheme {
       onSecondary: contrastColor(t.primary.scale(lightness: -0.25)),
       secondaryContainer: secondaryContainer,
       onSecondaryContainer: Colors.white,
-      background: surfaceBackgroundColor(ShadeUIColors.darkJet),
+      background: accentifiedBackground,
       onBackground: ShadeUIColors.porcelain,
       surface: ShadeUIColors.jet,
       onSurface: ShadeUIColors.porcelain,
