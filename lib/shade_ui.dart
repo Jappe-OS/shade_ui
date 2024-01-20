@@ -205,17 +205,7 @@ class ShadeTheme {
       ? Colors.black
       : Colors.white;
 
-  static Color surfaceBackgroundColor(Color base, Color accent) {
-    var amount = 0.3;
-
-    int blendedRed = (base.red + (accent.red - base.red) * amount).round();
-    int blendedGreen = (base.green + (accent.green - base.green) * amount).round();
-    int blendedBlue = (base.blue + (accent.blue - base.blue) * amount).round();
-    int blendedAlpha = (base.alpha + (accent.alpha - base.alpha) * amount).round();
-
-    return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
-  }
-
+  static const _kAccentifyAmount = 0.3;
   static const _kDefaultBorderRad = 7.0;
   static const _kButtonHeight = 35.0;
   static const _kButtonPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 15.5);
@@ -236,6 +226,19 @@ class ShadeTheme {
     final tertiary = t.primary.scale(lightness: 0.5).cap(saturation: .8);
     final tertiaryContainer = t.primary.scale(lightness: 0.75).cap(saturation: .75);
 
+    Color surfaceBackgroundColor(Color base) {
+      if (!t.accentifyColors) return base;
+
+      var amount = _kAccentifyAmount;
+
+      int blendedRed = (base.red + (t.primary.red - base.red) * amount).round();
+      int blendedGreen = (base.green + (t.primary.green - base.green) * amount).round();
+      int blendedBlue = (base.blue + (t.primary.blue - base.blue) * amount).round();
+      int blendedAlpha = (base.alpha + (t.primary.alpha - base.alpha) * amount).round();
+
+      return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
+    }
+
     final colorScheme = ColorScheme.fromSeed(
       seedColor: t.primary,
       error: ShadeUIColors.light.error,
@@ -250,7 +253,7 @@ class ShadeTheme {
       onSecondary: contrastColor(secondary),
       secondaryContainer: secondaryContainer,
       onSecondaryContainer: contrastColor(secondaryContainer),
-      background: ShadeUIColors.porcelain,
+      background: surfaceBackgroundColor(ShadeUIColors.porcelain),
       onBackground: ShadeUIColors.jet,
       surface: Colors.white,
       onSurface: ShadeUIColors.jet,
@@ -278,6 +281,19 @@ class ShadeTheme {
     final tertiary = t.primary.scale(lightness: -0.5, saturation: -0.25);
     final tertiaryContainer = t.primary.scale(lightness: -0.5, saturation: -0.65).capDown(lightness: .2);
 
+    Color surfaceBackgroundColor(Color base) {
+      if (!t.accentifyColors) return base;
+
+      var amount = _kAccentifyAmount;
+
+      int blendedRed = (base.red + (t.primary.red - base.red) * amount).round();
+      int blendedGreen = (base.green + (t.primary.green - base.green) * amount).round();
+      int blendedBlue = (base.blue + (t.primary.blue - base.blue) * amount).round();
+      int blendedAlpha = (base.alpha + (t.primary.alpha - base.alpha) * amount).round();
+
+      return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
+    }
+
     final colorScheme = ColorScheme.fromSeed(
       seedColor: t.primary,
       error: ShadeUIColors.dark.error,
@@ -292,7 +308,7 @@ class ShadeTheme {
       onSecondary: contrastColor(t.primary.scale(lightness: -0.25)),
       secondaryContainer: secondaryContainer,
       onSecondaryContainer: Colors.white,
-      background: ShadeUIColors.darkJet,
+      background: surfaceBackgroundColor(ShadeUIColors.darkJet),
       onBackground: ShadeUIColors.porcelain,
       surface: ShadeUIColors.jet,
       onSurface: ShadeUIColors.porcelain,
