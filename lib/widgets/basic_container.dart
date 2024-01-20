@@ -42,12 +42,11 @@ class _BasicContainerState extends State<BasicContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).brightness == Brightness.light ? Colors.black.withOpacity(_bgColorDelta) : Colors.white.withOpacity(_bgColorDelta),
       width: widget.width,
       height: widget.height,
       padding: widget.padding,
       decoration: widget.decoration?.borderRadius == null
-      ? (widget.decoration ?? const BoxDecoration()).copyWith(borderRadius: BorderRadius.circular(BPPresets.small))
+      ? (widget.decoration ?? const BoxDecoration()).copyWith(borderRadius: BorderRadius.circular(BPPresets.small), color: widget.decoration?.color ?? (Theme.of(context).brightness == Brightness.light ? Colors.black.withOpacity(_bgColorDelta) : Colors.white.withOpacity(_bgColorDelta)))
       : widget.decoration,
       child: widget.child,
     );
