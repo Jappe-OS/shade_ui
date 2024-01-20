@@ -205,6 +205,15 @@ class ShadeTheme {
       ? Colors.black
       : Colors.white;
 
+  static Color blend(Color base, Color other, double amount) {
+    int blendedRed = (base.red + (other.red - base.red) * amount).round();
+    int blendedGreen = (base.green + (other.green - base.green) * amount).round();
+    int blendedBlue = (base.blue + (other.blue - base.blue) * amount).round();
+    int blendedAlpha = (base.alpha + (other.alpha - base.alpha) * amount).round();
+
+    return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
+  }
+
   static const _kAccentifyAmount = 0.185;
   static const _kDefaultBorderRad = 7.0;
   static const _kButtonHeight = 35.0;
@@ -229,17 +238,11 @@ class ShadeTheme {
     Color surfaceBackgroundColor(Color base) {
       if (!t.accentifyColors) return base;
 
-      var amount = _kAccentifyAmount;
-
-      int blendedRed = (base.red + (t.primary.red - base.red) * amount).round();
-      int blendedGreen = (base.green + (t.primary.green - base.green) * amount).round();
-      int blendedBlue = (base.blue + (t.primary.blue - base.blue) * amount).round();
-      int blendedAlpha = (base.alpha + (t.primary.alpha - base.alpha) * amount).round();
-
-      return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
+      return blend(base, t.primary, _kAccentifyAmount);
     }
 
     final accentifiedBackground = surfaceBackgroundColor(ShadeUIColors.porcelain);
+    final outline = blend(accentifiedBackground, Colors.black, 0.2);
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: t.primary,
@@ -268,7 +271,7 @@ class ShadeTheme {
       tertiaryContainer: tertiaryContainer,
       onTertiaryContainer: contrastColor(tertiaryContainer),
       onSurfaceVariant: ShadeUIColors.coolGrey,
-      outline: const Color.fromARGB(255, 221, 221, 221),
+      outline: outline,
       outlineVariant: Colors.black,
       scrim: Colors.black,
     );
@@ -286,17 +289,11 @@ class ShadeTheme {
     Color surfaceBackgroundColor(Color base) {
       if (!t.accentifyColors) return base;
 
-      var amount = _kAccentifyAmount;
-
-      int blendedRed = (base.red + (t.primary.red - base.red) * amount).round();
-      int blendedGreen = (base.green + (t.primary.green - base.green) * amount).round();
-      int blendedBlue = (base.blue + (t.primary.blue - base.blue) * amount).round();
-      int blendedAlpha = (base.alpha + (t.primary.alpha - base.alpha) * amount).round();
-
-      return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
+      return blend(base, t.primary, _kAccentifyAmount);
     }
 
     final accentifiedBackground = surfaceBackgroundColor(ShadeUIColors.darkJet);
+    final outline = blend(accentifiedBackground, Colors.white, 0.2);
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: t.primary,
@@ -325,7 +322,7 @@ class ShadeTheme {
       tertiaryContainer: tertiaryContainer,
       onTertiaryContainer: ShadeUIColors.porcelain,
       onSurfaceVariant: ShadeUIColors.warmGrey,
-      outline: const Color.fromARGB(255, 68, 68, 68),
+      outline: outline,
       outlineVariant: Colors.white,
       scrim: Colors.black,
     );
