@@ -339,6 +339,7 @@ class ShadeTheme {
       padding: const MaterialStatePropertyAll(_kButtonPadding),
       shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad))),
       textStyle: const MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.normal)),
+      mouseCursor: const MaterialStatePropertyAll(SystemMouseCursors.alias),
     );
 
     MenuStyle menuStyle = MenuStyle(
@@ -498,6 +499,13 @@ class ShadeTheme {
         style: ButtonStyle(
           padding: const MaterialStatePropertyAll(_kButtonPadding),
           shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad))),
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return Colors.red;
+            }
+
+            return Colors.transparent;
+          }),
         ),
       ),
 
