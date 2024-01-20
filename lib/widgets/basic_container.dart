@@ -17,6 +17,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:shade_ui/shade_ui.dart';
 
 /// A basic container that should be placed straight on top of a background widget.
 ///
@@ -27,8 +28,9 @@ class BasicContainer extends StatefulWidget {
   final double? width;
   final double? height;
   final EdgeInsetsGeometry? padding;
+  final BoxDecoration? decoration;
 
-  const BasicContainer({Key? key, this.child, this.width, this.height, this.padding}) : super(key: key);
+  const BasicContainer({Key? key, this.child, this.width, this.height, this.padding, this.decoration}) : super(key: key);
 
   @override
   _BasicContainerState createState() => _BasicContainerState();
@@ -44,6 +46,9 @@ class _BasicContainerState extends State<BasicContainer> {
       width: widget.width,
       height: widget.height,
       padding: widget.padding,
+      decoration: widget.decoration?.borderRadius == null
+      ? (widget.decoration ?? const BoxDecoration()).copyWith(borderRadius: BorderRadius.circular(BPPresets.small))
+      : widget.decoration,
       child: widget.child,
     );
   }

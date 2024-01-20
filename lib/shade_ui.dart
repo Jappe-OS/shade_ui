@@ -774,3 +774,10 @@ class ShadeThemePrimary {
   static const Color pink = Colors.pinkAccent;
   static const Color indigo = Colors.indigoAccent;
 }
+
+/// Class of presets for **border radiuses** and **paddings**.
+class BPPresets {
+  static const double small = 7;
+  static const double medium = small * 2;
+  static const double big = medium * 2;
+}
