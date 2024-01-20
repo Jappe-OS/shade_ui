@@ -205,7 +205,7 @@ class ShadeTheme {
       ? Colors.black
       : Colors.white;
 
-  static const _kAccentifyAmount = 0.3;
+  static const _kAccentifyAmount = 0.185;
   static const _kDefaultBorderRad = 7.0;
   static const _kButtonHeight = 35.0;
   static const _kButtonPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 15.5);
