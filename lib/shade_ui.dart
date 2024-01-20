@@ -183,9 +183,16 @@ class ShadeCustomThemeProperties extends ChangeNotifier {
     notifyListeners();
   }
 
-  ShadeCustomThemeProperties(this._themeMode, this._primary);
+  bool? _accentifyColors;
+  bool get accentifyColors => _accentifyColors ?? false;
+  set accentifyColors(bool accentify) {
+    _accentifyColors = accentify;
+    notifyListeners();
+  }
 
-  factory ShadeCustomThemeProperties.setDefault() => ShadeCustomThemeProperties(null, null);
+  ShadeCustomThemeProperties(this._themeMode, this._primary, this._accentifyColors);
+
+  factory ShadeCustomThemeProperties.setDefault() => ShadeCustomThemeProperties(null, null, null);
 }
 
 /// Contains theme related properties.'
@@ -197,6 +204,17 @@ class ShadeTheme {
           Brightness.light
       ? Colors.black
       : Colors.white;
+
+  static Color surfaceBackgroundColor(Color base, Color accent) {
+    var amount = 0.3;
+
+    int blendedRed = (base.red + (accent.red - base.red) * amount).round();
+    int blendedGreen = (base.green + (accent.green - base.green) * amount).round();
+    int blendedBlue = (base.blue + (accent.blue - base.blue) * amount).round();
+    int blendedAlpha = (base.alpha + (accent.alpha - base.alpha) * amount).round();
+
+    return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
+  }
 
   static const _kDefaultBorderRad = 7.0;
   static const _kButtonHeight = 35.0;
@@ -382,7 +400,7 @@ class ShadeTheme {
     }
 
     final textTheme = createTextTheme(colorScheme.onSurface);
-    
+
     return ThemeData.from(
       useMaterial3: true,
       colorScheme: colorScheme,
@@ -577,16 +595,14 @@ class ShadeTheme {
           bottom: BorderSide(
             strokeAlign: -1,
             color: colorScheme.onSurface.withOpacity(
-                    colorScheme.isLight ? 0.2 : 0.07,
-                  ),
+              colorScheme.isLight ? 0.2 : 0.07,
+            ),
           ),
         ),
         scrolledUnderElevation: _kAppBarElevation,
         surfaceTintColor: colorScheme.surface,
         elevation: _kAppBarElevation,
-        systemOverlayStyle: colorScheme.isLight
-            ? SystemUiOverlayStyle.light
-            : SystemUiOverlayStyle.dark,
+        systemOverlayStyle: colorScheme.isLight ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
         titleTextStyle: createTextTheme(colorScheme.onSurface).titleLarge!.copyWith(
@@ -625,8 +641,8 @@ class ShadeTheme {
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             color: colorScheme.onSurface.withOpacity(
-                    colorScheme.isLight ? 0.3 : 0.2,
-                  ),
+              colorScheme.isLight ? 0.3 : 0.2,
+            ),
             width: 1,
           ),
         ),
@@ -704,9 +720,7 @@ class ShadeTheme {
         color: colorScheme.primary,
       ),
       tabBarTheme: TabBarTheme(
-        labelColor: colorScheme.isLight
-        ? colorScheme.onSurface
-        : Colors.white.withOpacity(0.8),
+        labelColor: colorScheme.isLight ? colorScheme.onSurface : Colors.white.withOpacity(0.8),
         indicatorColor: colorScheme.primary,
         dividerColor: colorScheme.outline,
         overlayColor: MaterialStateColor.resolveWith(
@@ -714,12 +728,8 @@ class ShadeTheme {
         ),
       ),
       dialogTheme: DialogTheme(
-        backgroundColor: colorScheme.brightness == Brightness.dark
-      ? ShadeUIColors.darkJet
-      : ShadeUIColors.porcelain,
-        surfaceTintColor: colorScheme.brightness == Brightness.dark
-      ? ShadeUIColors.darkJet
-      : ShadeUIColors.porcelain,
+        backgroundColor: colorScheme.brightness == Brightness.dark ? ShadeUIColors.darkJet : ShadeUIColors.porcelain,
+        surfaceTintColor: colorScheme.brightness == Brightness.dark ? ShadeUIColors.darkJet : ShadeUIColors.porcelain,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(_kWindowRadius),
           side: colorScheme.isDark
