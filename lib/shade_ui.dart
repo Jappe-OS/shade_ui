@@ -501,7 +501,7 @@ class ShadeTheme {
           shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kDefaultBorderRad))),
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.selected)) {
-              return Colors.red;
+              return colorScheme.primary.withOpacity(0.4);
             }
 
             return Colors.transparent;
