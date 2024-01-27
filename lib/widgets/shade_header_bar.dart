@@ -91,7 +91,7 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   final Object? heroTag;
 
   @override
-  Size get preferredSize => const Size(0, _defaultHeaderBarHeight);
+  Size get preferredSize => const Size(0, _populatedHeaderbarHeight);
 
   const ShadeHeaderBar(
       {super.key,
