@@ -25,7 +25,7 @@ import 'package:shade_ui/extensions.dart';
 import 'package:shade_ui/shade_ui.dart';
 
 const _defaultHeaderBarHeight = 35.0;
-const _populatedHeaderbarHeight = 40.0;
+const _populatedHeaderbarHeight = 45.0;
 
 class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   /// The primary title widget.
@@ -91,7 +91,7 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   final Object? heroTag;
 
   @override
-  Size get preferredSize => const Size(0, _populatedHeaderbarHeight);
+  Size get preferredSize => Size(0, (leading == null && actions == null) ? _defaultHeaderBarHeight : _populatedHeaderbarHeight);
 
   const ShadeHeaderBar(
       {super.key,
