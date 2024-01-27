@@ -1,5 +1,5 @@
 //  ShadeUI, A UI system for JappeOS apps.
-//  Copyright (C) 2023  The JappeOS team.
+//  Copyright (C) 2024  The JappeOS team.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as
@@ -14,11 +14,10 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-library shadeui;
+library shadeui.widgets;
 
-export 'widgets/widgets.dart';
-export 'constants.dart';
-export 'shade_theme.dart';
-export 'shade_theme_primary.dart';
-export 'shade_custom_theme_properties.dart';
-export 'border_padding_presets.dart';
+export 'basic_container.dart';
+export 'shade_app.dart';
+export 'shade_dropdown.dart';
+export 'shade_header_bar.dart';
+export 'shade_menu_strip.dart';

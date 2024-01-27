@@ -1,5 +1,5 @@
 //  ShadeUI, A UI system for JappeOS apps.
-//  Copyright (C) 2023  The JappeOS team.
+//  Copyright (C) 2024  The JappeOS team.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as
@@ -14,11 +14,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-library shadeui;
-
-export 'widgets/widgets.dart';
-export 'constants.dart';
-export 'shade_theme.dart';
-export 'shade_theme_primary.dart';
-export 'shade_custom_theme_properties.dart';
-export 'border_padding_presets.dart';
+/// Class of presets for **border radiuses** and **paddings**.
+class BPPresets {
+  static const double small = 7;
+  static const double medium = small * 2;
+  static const double big = medium * 2;
+}

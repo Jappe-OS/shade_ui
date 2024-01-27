@@ -1,5 +1,5 @@
 //  ShadeUI, A UI system for JappeOS apps.
-//  Copyright (C) 2023  The JappeOS team.
+//  Copyright (C) 2024  The JappeOS team.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as
@@ -14,11 +14,15 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-library shadeui;
+import 'package:flutter/material.dart';
 
-export 'widgets/widgets.dart';
-export 'constants.dart';
-export 'shade_theme.dart';
-export 'shade_theme_primary.dart';
-export 'shade_custom_theme_properties.dart';
-export 'border_padding_presets.dart';
+/// Contains accent colors used in the UI.
+class ShadeThemePrimary {
+  static const Color blue = Colors.blueAccent;
+  static const Color red = Colors.redAccent;
+  static const Color yellow = Colors.yellowAccent;
+  static const Color green = Colors.greenAccent;
+  static const Color orange = Colors.orangeAccent;
+  static const Color pink = Colors.pinkAccent;
+  static const Color indigo = Colors.indigoAccent;
+}

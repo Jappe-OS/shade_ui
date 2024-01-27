@@ -17,7 +17,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:shade_ui/shade_ui.dart';
+
+import '../border_padding_presets.dart';
 
 /// A basic container that should be placed straight on top of a background widget.
 ///
