@@ -24,6 +24,9 @@ import 'package:shade_ui/colors.dart';
 import 'package:shade_ui/extensions.dart';
 import 'package:shade_ui/shade_ui.dart';
 
+const _defaultHeaderBarHeight = 35.0;
+const _populatedHeaderbarHeight = 40.0;
+
 class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   /// The primary title widget.
   final Widget? title;
@@ -88,7 +91,7 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   final Object? heroTag;
 
   @override
-  Size get preferredSize => const Size(0, kCompactAppBarHeight);
+  Size get preferredSize => const Size(0, _defaultHeaderBarHeight);
 
   const ShadeHeaderBar(
       {super.key,
@@ -146,7 +149,7 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
     final border = Border(bottom: defaultBorder);
     final shape = border + (const Border());
 
-    const bSpacing = 14;
+    const bSpacing = 14.0;
     const bPadding = EdgeInsets.symmetric(horizontal: 10);
 
     Widget? backdropEffect(Widget? child) {
@@ -180,24 +183,22 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
 
     return TextFieldTapRegion(
       child: RawGestureDetector(
-      behavior: HitTestBehavior.translucent,
-      gestures: {
-        PanGestureRecognizer:
-              GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
+        behavior: HitTestBehavior.translucent,
+        gestures: {
+          PanGestureRecognizer: GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
             PanGestureRecognizer.new,
             (instance) => instance
               ..onStart = widget.isDraggable == true ? (_) => widget.onDrag?.call(context) : null
               ..gestureSettings = gestureSettings,
           ),
-          _PassiveTapGestureRecognizer:
-              GestureRecognizerFactoryWithHandlers<_PassiveTapGestureRecognizer>(
+          _PassiveTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<_PassiveTapGestureRecognizer>(
             _PassiveTapGestureRecognizer.new,
             (instance) => instance
               ..onDoubleTap = (() => widget.isMaximizable == true
-            ? widget.onMaximize?.call(context)
-            : widget.isRestorable == true
-                ? widget.onRestore?.call(context)
-                : null)
+                  ? widget.onMaximize?.call(context)
+                  : widget.isRestorable == true
+                      ? widget.onRestore?.call(context)
+                      : null)
               ..onSecondaryTap = widget.onShowMenu != null ? () => widget.onShowMenu!(context) : null
               ..gestureSettings = gestureSettings,
           ),
@@ -209,7 +210,7 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
           title: backdropEffect(widget.title),
           centerTitle: widget.centerTitle,
           titleSpacing: widget.titleSpacing ?? BPPresets.medium,
-          toolbarHeight: kCompactAppBarHeight,
+          toolbarHeight: (widget.leading == null && widget.actions == null) ? _defaultHeaderBarHeight : _populatedHeaderbarHeight,
           foregroundColor: foregroundColor,
           backgroundColor: backgroundColor,
           titleTextStyle: titleTextStyle,
@@ -253,7 +254,7 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
                                       ),
                                       child: closeButton,
                                     ),
-                          ].withSpacing(bSpacing as double),
+                          ].withSpacing(bSpacing),
                         ),
                       ),
                   ],
@@ -282,7 +283,9 @@ class _ShadeWindowControl extends StatefulWidget {
   final Function()? onTap;
 
   const _ShadeWindowControl({
-    required this.foregroundColor, required this.icon, required this.onTap,
+    required this.foregroundColor,
+    required this.icon,
+    required this.onTap,
   });
 
   @override
@@ -343,10 +346,7 @@ class _PassiveTapGestureRecognizer extends TapGestureRecognizer {
     required PointerUpEvent up,
   }) {
     super.handleTapUp(down: down, up: up);
-    if (onDoubleTap != null &&
-        _firstTapDown != null &&
-        _firstTapUp != null &&
-        down.buttons == kPrimaryButton) {
+    if (onDoubleTap != null && _firstTapDown != null && _firstTapUp != null && down.buttons == kPrimaryButton) {
       // the time from the first tap down to the second tap down
       final interval = down.timeStamp - _firstTapDown!.timeStamp;
       // the time from the first tap up to the second tap down
@@ -355,10 +355,7 @@ class _PassiveTapGestureRecognizer extends TapGestureRecognizer {
       final slop = (_firstTapDown!.position - _firstTapUp!.position).distance;
       // the distance between the first tap down and the second tap down
       final secondSlop = (_firstTapDown!.position - down.position).distance;
-      if (interval < kDoubleTapTimeout &&
-          timeBetween >= kDoubleTapMinTime &&
-          slop <= kDoubleTapTouchSlop &&
-          secondSlop <= kDoubleTapSlop) {
+      if (interval < kDoubleTapTimeout && timeBetween >= kDoubleTapMinTime && slop <= kDoubleTapTouchSlop && secondSlop <= kDoubleTapSlop) {
         invokeCallback<void>('onDoubleTap', onDoubleTap!);
         _firstTapDown = null;
         _firstTapUp = null;
