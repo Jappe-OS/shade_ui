@@ -150,7 +150,7 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
     final shape = border + (const Border());
 
     const bSpacing = 0.0;
-    const bPadding = EdgeInsets.symmetric(horizontal: BPPresets.small);
+    const bPadding = EdgeInsets.only(left: BPPresets.small);
 
     Widget? backdropEffect(Widget? child) {
       if (child == null) return null;
