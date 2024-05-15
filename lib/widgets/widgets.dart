@@ -17,7 +17,6 @@
 library shadeui.widgets;
 
 export 'basic_container.dart';
+export 'advanced_container.dart';
 export 'shade_app.dart';
-export 'shade_dropdown.dart';
 export 'shade_header_bar.dart';
-export 'shade_menu_strip.dart';

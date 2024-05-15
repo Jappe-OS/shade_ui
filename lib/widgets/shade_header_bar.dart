@@ -67,8 +67,14 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   /// Called when the close button is pressed.
   final FutureOr<void> Function(BuildContext)? onClose;
 
+  /// Called when the title bar dragging begins.
+  final FutureOr<void> Function(BuildContext)? onDragStart;
+
+  /// Called when the title bar dragging ends.
+  final FutureOr<void> Function(BuildContext)? onDragEnd;
+
   /// Called when the title bar is dragged to move the window.
-  final FutureOr<void> Function(BuildContext)? onDrag;
+  final FutureOr<void> Function(BuildContext, DragUpdateDetails)? onDrag;
 
   /// Called when the maximize button is pressed or the title bar is
   /// double-clicked while the window is not maximized.
@@ -108,6 +114,8 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
       this.isMinimizable,
       this.isRestorable,
       this.onClose,
+      this.onDragStart,
+      this.onDragEnd,
       this.onDrag,
       this.onMaximize,
       this.onMinimize,
@@ -188,20 +196,23 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
           PanGestureRecognizer: GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
             PanGestureRecognizer.new,
             (instance) => instance
-              ..onStart = widget.isDraggable == true ? (_) => widget.onDrag?.call(context) : null
-              ..gestureSettings = gestureSettings,
+              //..onStart = widget.isDraggable == true ? (_) => widget.onDrag?.call(context) : null
+              ..gestureSettings = gestureSettings
+              ..onDown = ((_) => widget.onDragStart?.call(context))
+              ..onEnd = ((_) => widget.onDragEnd?.call(context))
+              ..onUpdate = ((p0) => widget.onDrag?.call(context, p0))
           ),
           _PassiveTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<_PassiveTapGestureRecognizer>(
-            _PassiveTapGestureRecognizer.new,
-            (instance) => instance
-              ..onDoubleTap = (() => widget.isMaximizable == true
-                  ? widget.onMaximize?.call(context)
-                  : widget.isRestorable == true
-                      ? widget.onRestore?.call(context)
-                      : null)
-              ..onSecondaryTap = widget.onShowMenu != null ? () => widget.onShowMenu!(context) : null
-              ..gestureSettings = gestureSettings,
-          ),
+              _PassiveTapGestureRecognizer.new,
+              (instance) => instance
+                ..onDoubleTap = (() => widget.isMaximizable == true
+                    ? widget.onMaximize?.call(context)
+                    : widget.isRestorable == true
+                        ? widget.onRestore?.call(context)
+                        : null)
+                ..onSecondaryTap = widget.onShowMenu != null ? () => widget.onShowMenu!(context) : null
+                ..gestureSettings = gestureSettings,
+              ),
         },
         child: AppBar(
           elevation: 0,

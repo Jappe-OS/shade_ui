@@ -151,14 +151,18 @@ class ShadeTheme {
   /// Only the input parameters can change between the dark and
   /// the light themes.
   static ThemeData _buildTheme(ShadeCustomThemeProperties t, ColorScheme colorScheme) {
-    ButtonStyle commonButtonStyle = ButtonStyle(
+    // Style Constants
+
+    const buttonMouseCursor = SystemMouseCursors.alias;
+
+    final commonButtonStyle = ButtonStyle(
       padding: const MaterialStatePropertyAll(kButtonPadding),
       shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(kDefaultBorderRad))),
       textStyle: const MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.normal)),
-      mouseCursor: const MaterialStatePropertyAll(SystemMouseCursors.alias),
+      mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
     );
 
-    MenuStyle menuStyle = MenuStyle(
+    final menuStyle = MenuStyle(
       surfaceTintColor: MaterialStateColor.resolveWith((states) => colorScheme.isDark ? colorScheme.surfaceVariant : colorScheme.surface),
       shape: MaterialStateProperty.resolveWith(
         (states) => RoundedRectangleBorder(
@@ -182,6 +186,57 @@ class ShadeTheme {
       elevation: MaterialStateProperty.resolveWith((states) => 1),
       backgroundColor: MaterialStateProperty.resolveWith((states) => colorScheme.isDark ? colorScheme.surfaceVariant : colorScheme.surface),
     );
+
+    final inputDecorationTheme = () {
+      final fill = colorScheme.isLight
+      ? const Color(0xFFededed)
+      : const Color.fromARGB(255, 40, 40, 40);
+
+      return InputDecorationTheme(
+        contentPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 9, top: 10),
+        constraints: const BoxConstraints(
+          minHeight: kButtonHeight,
+          maxHeight: kButtonHeight,
+        ),
+        filled: true,
+        fillColor: fill,
+        isDense: true,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.0,
+            color: colorScheme.outline,
+          ),
+          borderRadius: BorderRadius.circular(kDefaultBorderRad),
+        ),
+        iconColor: colorScheme.onSurface,
+        helperStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
+        hintStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
+        labelStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
+        suffixStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ).copyWith(
+          color: colorScheme.onSurface.scale(lightness: -0.2),
+        ),
+        prefixStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ).copyWith(
+          color: colorScheme.onSurface.scale(lightness: -0.2),
+        ),
+      );
+    }();
+
+    // Style Getters
 
     Color getCheckFillColor(Set<MaterialState> states, ColorScheme colorScheme) {
       if (!states.contains(MaterialState.disabled)) {
@@ -259,12 +314,12 @@ class ShadeTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(kDefaultBorderRad),
         ),
-        height: 35,
+        height: kButtonHeight,
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: colorScheme.primary,
+          backgroundColor: colorScheme.secondary,
           foregroundColor: colorScheme.onSecondaryContainer,
           elevation: 0,
           shadowColor: Colors.transparent,
@@ -300,6 +355,8 @@ class ShadeTheme {
           foregroundColor: colorScheme.onSurface,
           highlightColor: colorScheme.onSurface.withOpacity(0.05),
           surfaceTintColor: colorScheme.background,
+          disabledMouseCursor: buttonMouseCursor,
+          enabledMouseCursor: buttonMouseCursor,
         ),
       ),
 
@@ -308,6 +365,7 @@ class ShadeTheme {
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           alignment: Alignment.center,
           textStyle: MaterialStatePropertyAll(textTheme.bodyMedium),
+          mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
         ),
       ),
 
@@ -322,56 +380,16 @@ class ShadeTheme {
 
             return Colors.transparent;
           }),
+          mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
         ),
       ),
 
       // Text Input
 
-      inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: (56 - 35) / 2 - 1),
-        filled: true,
-        //fillColor: ,
-        isDense: true,
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 1.0,
-            color: colorScheme.outline,
-          ),
-          borderRadius: BorderRadius.circular(kDefaultBorderRad),
-        ),
-        iconColor: colorScheme.onSurface,
-        helperStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        hintStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        labelStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        suffixStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ).copyWith(
-          color: colorScheme.onSurface.scale(lightness: -0.2),
-        ),
-        prefixStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ).copyWith(
-          color: colorScheme.onSurface.scale(lightness: -0.2),
-        ),
-      ),
+      inputDecorationTheme: inputDecorationTheme,
 
       dropdownMenuTheme: DropdownMenuThemeData(
-        inputDecorationTheme: const InputDecorationTheme(
-          filled: true,
-          isDense: true,
-          contentPadding: EdgeInsets.zero,
-        ),
+        inputDecorationTheme: inputDecorationTheme,
         menuStyle: menuStyle,
       ),
 
@@ -384,6 +402,7 @@ class ShadeTheme {
         overlayColor: colorScheme.primary.withOpacity(colorScheme.isLight ? 0.4 : 0.7),
         thumbShape: const RoundSliderThumbShape(elevation: 3.0),
         inactiveTrackColor: colorScheme.onSurface.withOpacity(0.3),
+        mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
       ),
 
       // Check
@@ -398,11 +417,13 @@ class ShadeTheme {
         checkColor: MaterialStateProperty.resolveWith(
           (states) => getCheckColor(states, colorScheme),
         ),
+        mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
       ),
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.resolveWith(
           (states) => getCheckFillColor(states, colorScheme),
         ),
+        mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
       ),
       toggleButtonsTheme: ToggleButtonsThemeData(
         constraints: const BoxConstraints(
@@ -428,6 +449,7 @@ class ShadeTheme {
         trackColor: MaterialStateProperty.resolveWith(
           (states) => getSwitchTrackColor(states, colorScheme),
         ),
+        mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
       ),
 
       // Other
@@ -561,6 +583,14 @@ class ShadeTheme {
         linearTrackColor: colorScheme.primary.withOpacity(0.3),
         color: colorScheme.primary,
       ),
+      menuBarTheme: const MenuBarThemeData(
+        style: MenuStyle(
+          minimumSize: MaterialStatePropertyAll(Size(0, kButtonHeight)),
+          maximumSize: MaterialStatePropertyAll(Size(double.infinity, kButtonHeight)),
+          shadowColor: MaterialStatePropertyAll(Colors.black),
+          elevation: MaterialStatePropertyAll(2),
+        ),
+      ),
       tabBarTheme: TabBarTheme(
         labelColor: colorScheme.isLight ? colorScheme.onSurface : Colors.white.withOpacity(0.8),
         indicatorColor: colorScheme.primary,
@@ -585,3 +615,10 @@ class ShadeTheme {
     );
   }
 }
+
+//class ShadeThemeWidgets extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    
+//  }
+//}
