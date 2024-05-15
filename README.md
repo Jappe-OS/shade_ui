@@ -46,11 +46,12 @@ ShadeApp(
 ```
 
 ### 3. Done!
-You should now be able to use all of the Shade UI within your app!
+You should now be able to use ShadeUI within your app!
 
 * If you encounter any problems, join the Discord server (link on organization's main page).
 * If you encounter a bug, please report it to the `issues` section.
 
 Important resources:
+* [Main organization page](https://github.com/Jappe-OS/)
 * [Shade UI](https://github.com/Jappe-OS/ShadeUI)
-* [Shade Theming](https://github.com/Jappe-OS/ShadeTheming)
+* [Shade UI Issues](https://github.com/Jappe-OS/ShadeUI/issues)
