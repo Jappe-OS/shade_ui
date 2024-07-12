@@ -97,68 +97,66 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
       ));
     }
 
-    return Container(
-      width: widget.width,
-      height: widget.height,
-      decoration: widget.borderStyle == AdvancedContainerBorder.double
-          ? BoxDecoration(
-              border: widget.borderStyle == AdvancedContainerBorder.double
-                  ? Border.all(
-                      color: Colors.black.withOpacity(0.7),
-                      width: 1.0,
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                    )
-                  : null,
-              borderRadius: widget.borderStyle == AdvancedContainerBorder.double ? BorderRadius.all(Radius.circular(widget.borderRadius)) : null,
-              boxShadow: shadows,
-            )
-          : const BoxDecoration(),
-      child: Container(
-        padding: widget.padding,
-        decoration: BoxDecoration(
-          color: () {
-            switch (widget.background) {
-              case AdvancedContainerBackground.addOnBackground:
-                return (Theme.of(context).brightness == Brightness.light
-                    ? Colors.black.withOpacity(_bgColorDelta)
-                    : Colors.white.withOpacity(_bgColorDelta));
-              case AdvancedContainerBackground.solidBackground:
-                return Theme.of(context).colorScheme.background;
-              case AdvancedContainerBackground.transparentBackground:
-                return Theme.of(context).colorScheme.background.withOpacity(0.8);
-              case AdvancedContainerBackground.custom:
-                return widget.backgroundColor;
-            }
-          }(),
-          borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
-          border: () {
-            if (widget.borderStyle == AdvancedContainerBorder.single) {
-              return Border.all(color: widget.borderColor ?? Theme.of(context).dividerColor, width: 1.0, strokeAlign: BorderSide.strokeAlignOutside);
-            } else if (widget.borderStyle == AdvancedContainerBorder.double) {
-              return Border.all(
-                color: widget.borderColor ?? (Theme.of(context).colorScheme.onInverseSurface.scale(lightness: 0.05)),
-                width: 1.0,
-                strokeAlign: BorderSide.strokeAlignInside,
-              );
-            }
-
-            return null;
-          }(),
-        ),
-        child: () {
-          if (widget.blur) {
-            return ClipRRect(
+    Widget container() {
+      return Container(
+          width: widget.width,
+          height: widget.height,
+          decoration: widget.borderStyle == AdvancedContainerBorder.double
+              ? BoxDecoration(
+                  border: widget.borderStyle == AdvancedContainerBorder.double
+                      ? Border.all(
+                          color: Colors.black.withOpacity(0.7),
+                          width: 1.0,
+                          strokeAlign: BorderSide.strokeAlignOutside,
+                        )
+                      : null,
+                  borderRadius: widget.borderStyle == AdvancedContainerBorder.double ? BorderRadius.all(Radius.circular(widget.borderRadius)) : null,
+                  boxShadow: shadows,
+                )
+              : const BoxDecoration(),
+          child: Container(
+            padding: widget.padding,
+            decoration: BoxDecoration(
+              color: () {
+                switch (widget.background) {
+                  case AdvancedContainerBackground.addOnBackground:
+                    return (Theme.of(context).brightness == Brightness.light
+                        ? Colors.black.withOpacity(_bgColorDelta)
+                        : Colors.white.withOpacity(_bgColorDelta));
+                  case AdvancedContainerBackground.solidBackground:
+                    return Theme.of(context).colorScheme.background;
+                  case AdvancedContainerBackground.transparentBackground:
+                    return Theme.of(context).colorScheme.background.withOpacity(0.85);
+                  case AdvancedContainerBackground.custom:
+                    return widget.backgroundColor;
+                }
+              }(),
               borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                child: widget.child,
-              ),
-            );
-          }
+              border: () {
+                if (widget.borderStyle == AdvancedContainerBorder.single) {
+                  return Border.all(color: widget.borderColor ?? Theme.of(context).dividerColor, width: 1.0, strokeAlign: BorderSide.strokeAlignOutside);
+                } else if (widget.borderStyle == AdvancedContainerBorder.double) {
+                  return Border.all(
+                    color: widget.borderColor ?? (Theme.of(context).colorScheme.onInverseSurface.scale(lightness: 0.05)),
+                    width: 1.0,
+                    strokeAlign: BorderSide.strokeAlignInside,
+                  );
+                }
 
-          return widget.child;
-        }(),
+                return null;
+              }(),
+            ),
+            child: widget.child,
+          ),
+        );
+    }
+
+    return widget.blur ? ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: container(),
       ),
-    );
+    ) : container();
   }
 }
