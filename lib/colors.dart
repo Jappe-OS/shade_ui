@@ -95,16 +95,16 @@ class ShadeUIColors {
   static const Color inkstone = Color(0xFF3B3B3B);
 
   /// Jet
-  static const Color jet = Color(0xFF2B2B2B);
+  static const Color jet = Color.fromARGB(255, 31, 31, 31);
 
   /// Dark Jet
-  static const Color darkJet = Color(0xFF252525);
+  static const Color darkJet = Color.fromARGB(255, 20, 20, 20);
 
   /// Light title bar
   static const Color titleBarLight = Color(0xFFEBEBEB);
 
   /// Dark title bar
-  static const Color titleBarDark = Color(0xFF303030);
+  static const Color titleBarDark = Color.fromARGB(255, 42, 42, 42);
 
   /// Link
   final Color link;
