@@ -145,6 +145,16 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
 
                 return null;
               }(),
+              image: widget.blur ? const DecorationImage(
+                image: AssetImage(
+                  "resources/images/blur_noise.png",
+                  package: "shade_ui",
+                ),
+                fit: BoxFit.none,
+                repeat: ImageRepeat.repeat,
+                scale: 7,
+                opacity: 0.038,
+              ) : null,
             ),
             child: widget.child,
           ),
@@ -154,7 +164,7 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
     return widget.blur ? ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        filter: ImageFilter.blur(sigmaX: 13.0, sigmaY: 13.0, tileMode: TileMode.repeated),
         child: container(),
       ),
     ) : container();
