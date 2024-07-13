@@ -76,6 +76,34 @@ class AdvancedContainer extends StatefulWidget {
     this.blur = false,
   }) : super(key: key);
 
+  AdvancedContainer copyWith({
+    Widget? child,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry? padding,
+    List<BoxShadow>? shadows,
+    AdvancedContainerBackground? background,
+    Color? backgroundColor,
+    Color? borderColor,
+    double? borderRadius,
+    AdvancedContainerBorder? borderStyle,
+    bool? blur,
+  }) {
+    return AdvancedContainer(
+      width: width ?? this.width,
+      height: height ?? this.height,
+      padding: padding ?? this.padding,
+      shadows: shadows ?? this.shadows,
+      background: background ?? this.background,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      borderColor: borderColor ?? this.borderColor,
+      borderRadius: borderRadius ?? this.borderRadius,
+      borderStyle: borderStyle ?? this.borderStyle,
+      blur: blur ?? this.blur,
+      child: child ?? this.child,
+    );
+  }
+
   @override
   _AdvancedContainerState createState() => _AdvancedContainerState();
 }
