@@ -134,7 +134,7 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
                 border: Border.all(
                   color: Colors.black.withOpacity(0.7),
                   width: 1.0,
-                  strokeAlign: BorderSide.strokeAlignOutside,
+                  strokeAlign: BorderSide.strokeAlignInside,
                 ),
                 borderRadius: BorderRadius.circular(widget.borderRadius),
                 boxShadow: shadows,
@@ -159,12 +159,12 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
             borderRadius: BorderRadius.circular(widget.borderRadius),
             border: () {
               if (widget.borderStyle == AdvancedContainerBorder.single) {
-                return Border.all(color: widget.borderColor ?? Theme.of(context).dividerColor, width: 1.0, strokeAlign: BorderSide.strokeAlignOutside);
+                return Border.all(color: widget.borderColor ?? Theme.of(context).dividerColor, width: 1.0, strokeAlign: BorderSide.strokeAlignInside);
               } else if (widget.borderStyle == AdvancedContainerBorder.double) {
                 return Border.all(
                   color: widget.borderColor ?? (Theme.of(context).colorScheme.onInverseSurface.scale(lightness: 0.05)),
                   width: 1.0,
-                  strokeAlign: BorderSide.strokeAlignInside,
+                  strokeAlign: BorderSide.strokeAlignInside - 1.0,
                 );
               }
 
