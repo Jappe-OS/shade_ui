@@ -172,6 +172,16 @@ class ShadeUIColors {
 
 /// Set of useful methods when working with [Color]
 extension ShadeUIColorExtension on Color {
+  /// Blend this color with the [other] color with the specified [amount].
+  Color blend(Color other, double amount) {
+    int blendedRed = (red + (other.red - red) * amount).round();
+    int blendedGreen = (green + (other.green - green) * amount).round();
+    int blendedBlue = (blue + (other.blue - blue) * amount).round();
+    int blendedAlpha = (alpha + (other.alpha - alpha) * amount).round();
+
+    return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
+  }
+
   /// Scale color attributes relatively to current ones.
   /// [alpha], [hue], [saturation] and [lightness] values must be clamped between -1.0 and 1.0
   Color scale({

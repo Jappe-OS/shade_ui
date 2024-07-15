@@ -156,15 +156,15 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
                   return widget.backgroundColor;
               }
             }(),
-            borderRadius: BorderRadius.circular(widget.borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius - 1),
             border: () {
               if (widget.borderStyle == AdvancedContainerBorder.single) {
                 return Border.all(color: widget.borderColor ?? Theme.of(context).dividerColor, width: 1.0, strokeAlign: BorderSide.strokeAlignInside);
               } else if (widget.borderStyle == AdvancedContainerBorder.double) {
                 return Border.all(
-                  color: widget.borderColor ?? (Theme.of(context).colorScheme.onInverseSurface.scale(lightness: 0.05)),
-                  width: 1.0,
-                  strokeAlign: BorderSide.strokeAlignInside - 1.0,
+                  color: widget.borderColor ?? (Theme.of(context).colorScheme.onInverseSurface.blend(Colors.white, 0.3)),
+                  width: 0.5,
+                  strokeAlign: BorderSide.strokeAlignInside - 0.5,
                 );
               }
 

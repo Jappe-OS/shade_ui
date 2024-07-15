@@ -33,15 +33,6 @@ class ShadeTheme {
       ? Colors.black
       : Colors.white;
 
-  static Color blend(Color base, Color other, double amount) {
-    int blendedRed = (base.red + (other.red - base.red) * amount).round();
-    int blendedGreen = (base.green + (other.green - base.green) * amount).round();
-    int blendedBlue = (base.blue + (other.blue - base.blue) * amount).round();
-    int blendedAlpha = (base.alpha + (other.alpha - base.alpha) * amount).round();
-
-    return Color.fromARGB(blendedAlpha, blendedRed, blendedGreen, blendedBlue);
-  }
-
   static const _kkDividerColorDark = Color.fromARGB(255, 65, 65, 65);
 
   /// Light theme data to assign to [MaterialApp]s 'theme' param.
@@ -54,11 +45,11 @@ class ShadeTheme {
     Color surfaceBackgroundColor(Color base) {
       if (!t.accentifyColors) return base;
 
-      return blend(base, t.primary, kAccentifyAmount);
+      return base.blend(t.primary, kAccentifyAmount);
     }
 
     final accentifiedBackground = surfaceBackgroundColor(ShadeUIColors.porcelain);
-    final outline = blend(accentifiedBackground, Colors.black, 0.2);
+    final outline = accentifiedBackground.blend(Colors.black, 0.2);
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: t.primary,
@@ -78,8 +69,8 @@ class ShadeTheme {
       onBackground: ShadeUIColors.jet,
       surface: Colors.white,
       onSurface: ShadeUIColors.jet,
-      inverseSurface: ShadeUIColors.jet,
-      onInverseSurface: ShadeUIColors.porcelain,
+      inverseSurface: surfaceBackgroundColor(ShadeUIColors.jet),
+      onInverseSurface: surfaceBackgroundColor(ShadeUIColors.porcelain),
       surfaceTint: ShadeUIColors.warmGrey,
       surfaceVariant: ShadeUIColors.warmGrey,
       tertiary: tertiary,
@@ -105,11 +96,11 @@ class ShadeTheme {
     Color surfaceBackgroundColor(Color base) {
       if (!t.accentifyColors) return base;
 
-      return blend(base, t.primary, kAccentifyAmount);
+      return base.blend(t.primary, kAccentifyAmount);
     }
 
     final accentifiedBackground = surfaceBackgroundColor(ShadeUIColors.darkJet);
-    final outline = blend(accentifiedBackground, Colors.white, 0.2);
+    final outline = accentifiedBackground.blend(Colors.white, 0.2);
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: t.primary,
@@ -129,8 +120,8 @@ class ShadeTheme {
       onBackground: ShadeUIColors.porcelain,
       surface: ShadeUIColors.jet,
       onSurface: ShadeUIColors.porcelain,
-      inverseSurface: ShadeUIColors.porcelain,
-      onInverseSurface: ShadeUIColors.inkstone,
+      inverseSurface: surfaceBackgroundColor(ShadeUIColors.porcelain),
+      onInverseSurface: surfaceBackgroundColor(ShadeUIColors.inkstone),
       surfaceTint: ShadeUIColors.coolGrey,
       surfaceVariant: const Color.fromARGB(255, 34, 34, 34),
       tertiary: tertiary,
