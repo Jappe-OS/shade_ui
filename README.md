@@ -15,7 +15,7 @@ Open the projects `pubspec.yaml` file and add this under the `dependencies` sect
 ```yaml
 shade_ui:
   git:
-    url: https://github.com/Jappe-OS/ShadeUI.git
+    url: https://github.com/Jappe-OS/shade_ui.git
     ref: master-2.0
 ```
 This will add the Shade UI's repository's main branch as a dependency.
@@ -53,5 +53,5 @@ You should now be able to use ShadeUI within your app!
 
 Important resources:
 * [Main organization page](https://github.com/Jappe-OS/)
-* [Shade UI](https://github.com/Jappe-OS/ShadeUI)
-* [Shade UI Issues](https://github.com/Jappe-OS/ShadeUI/issues)
+* [Shade UI](https://github.com/Jappe-OS/shade_ui)
+* [Shade UI Issues](https://github.com/Jappe-OS/shade_ui/issues)
