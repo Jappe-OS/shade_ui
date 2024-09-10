@@ -20,3 +20,4 @@ export 'basic_container.dart';
 export 'advanced_container.dart';
 export 'shade_app.dart';
 export 'shade_header_bar.dart';
+export 'shade_selection_border.dart';
