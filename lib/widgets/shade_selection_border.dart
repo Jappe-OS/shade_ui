@@ -50,7 +50,7 @@ class _ShadeSelectionBorderState extends State<ShadeSelectionBorder> {
       duration: const Duration(milliseconds: 100),
       curve: Curves.easeOut,
       decoration: BoxDecoration(
-        border: Border.all(width: 2.0, strokeAlign: 3.0, color: borderColor),
+        border: Border.all(width: 2.0, strokeAlign: BorderSide.strokeAlignOutside, color: borderColor),
         borderRadius: widget.borderRadius,
       ),
       child: MouseRegion(
