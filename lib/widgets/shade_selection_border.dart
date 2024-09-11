@@ -19,7 +19,6 @@
 import 'package:flutter/material.dart';
 
 /// A selection that should wrap a [Container] or a similar widget.
-/// This widget should have the same border radius as the child widget.
 class ShadeSelectionBorder extends StatefulWidget {
   final BorderRadiusGeometry borderRadius;
   final bool isHighlighted;
@@ -32,6 +31,8 @@ class ShadeSelectionBorder extends StatefulWidget {
 }
 
 class _ShadeSelectionBorderState extends State<ShadeSelectionBorder> {
+  static const kPadding = 4.0;
+
   bool isHovered = false;
 
   @override
@@ -49,14 +50,18 @@ class _ShadeSelectionBorderState extends State<ShadeSelectionBorder> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 100),
       curve: Curves.easeOut,
+      padding: const EdgeInsets.all(kPadding),
       decoration: BoxDecoration(
-        border: Border.all(width: 2.0, strokeAlign: BorderSide.strokeAlignOutside, color: borderColor),
+        border: Border.all(width: 4.0, strokeAlign: BorderSide.strokeAlignOutside, color: borderColor),
         borderRadius: widget.borderRadius,
       ),
       child: MouseRegion(
         onEnter: (p0) => setState(() => isHovered = true),
         onExit: (p0) => setState(() => isHovered = false),
-        child: widget.child,
+        child: ClipRRect(
+          borderRadius: widget.borderRadius.subtract(BorderRadius.circular(kPadding)),
+          child: widget.child,
+        ),
       ),
     );
   }
