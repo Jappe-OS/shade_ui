@@ -22,3 +22,4 @@ export 'shade_theme.dart';
 export 'shade_theme_primary.dart';
 export 'shade_custom_theme_properties.dart';
 export 'border_padding_presets.dart';
+export 'shade_util_widgets.dart';
