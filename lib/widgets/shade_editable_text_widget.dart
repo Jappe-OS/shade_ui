@@ -67,6 +67,7 @@ class _ShadeEditableTextWidgetState extends State<ShadeEditableTextWidget> {
         controller: controller,
         focusNode: focus,
         onSubmitted: widget.onEditingComplete,
+        textAlign: widget.textAlign,
         decoration: InputDecoration(
           filled: focus.hasFocus,
           border: isHovered || focus.hasFocus ? Theme.of(context).inputDecorationTheme.border : InputBorder.none,

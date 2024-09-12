@@ -20,11 +20,18 @@ import 'package:flutter/material.dart';
 
 /// A selection that should wrap a [Container] or a similar widget.
 class ShadeSelectionBorder extends StatefulWidget {
+  /// Called when the mouse cursor enters the widget, with a boolean value of
+  /// `true`, and when the mouse leaves, `false`.
+  ///
+  /// Do not call setState inside of [onHover].
+  final void Function(bool)? onHover;
+
   final BorderRadiusGeometry borderRadius;
   final bool isHighlighted;
   final Widget child;
 
-  const ShadeSelectionBorder({Key? key, this.borderRadius = BorderRadius.zero, this.isHighlighted = false, required this.child}) : super(key: key);
+  const ShadeSelectionBorder({Key? key, this.onHover, this.borderRadius = BorderRadius.zero, this.isHighlighted = false, required this.child})
+      : super(key: key);
 
   @override
   _ShadeSelectionBorderState createState() => _ShadeSelectionBorderState();
@@ -56,8 +63,14 @@ class _ShadeSelectionBorderState extends State<ShadeSelectionBorder> {
         borderRadius: widget.borderRadius,
       ),
       child: MouseRegion(
-        onEnter: (p0) => setState(() => isHovered = true),
-        onExit: (p0) => setState(() => isHovered = false),
+        onEnter: (p0) => setState(() {
+          isHovered = true;
+          widget.onHover?.call(isHovered);
+        }),
+        onExit: (p0) => setState(() {
+          isHovered = false;
+          widget.onHover?.call(isHovered);
+        }),
         child: ClipRRect(
           borderRadius: widget.borderRadius.subtract(BorderRadius.circular(kPadding)),
           child: widget.child,
