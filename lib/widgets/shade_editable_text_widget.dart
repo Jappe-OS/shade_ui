@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 /// A widget that appears like a normal [Text] widget, but can be edited.
 class ShadeEditableTextWidget extends StatefulWidget {
   final String initialText;
-  final void Function()? onEditingComplete;
+  final void Function(String)? onEditingComplete;
   final TextAlign textAlign;
 
   const ShadeEditableTextWidget({Key? key, required this.initialText, this.onEditingComplete, this.textAlign = TextAlign.center}) : super(key: key);
@@ -49,7 +49,13 @@ class _ShadeEditableTextWidgetState extends State<ShadeEditableTextWidget> {
     focus.dispose();
   }
 
-  void _onFocusChange() => setState(() {});
+  void _onFocusChange() {
+    if (!focus.hasFocus) {
+      widget.onEditingComplete?.call(controller.text);
+    }
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +64,7 @@ class _ShadeEditableTextWidgetState extends State<ShadeEditableTextWidget> {
       onExit: (p0) => setState(() => isHovered = false),
       child: TextField(
         focusNode: focus,
-        onEditingComplete: widget.onEditingComplete,
+        onSubmitted: widget.onEditingComplete,
         decoration: InputDecoration(
           filled: focus.hasFocus,
           border: isHovered || focus.hasFocus ? Theme.of(context).inputDecorationTheme.border : InputBorder.none,
