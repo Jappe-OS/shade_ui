@@ -47,6 +47,7 @@ class _ShadeEditableTextWidgetState extends State<ShadeEditableTextWidget> {
     super.dispose();
     focus.removeListener(_onFocusChange);
     focus.dispose();
+    controller.dispose();
   }
 
   void _onFocusChange() {
@@ -63,6 +64,7 @@ class _ShadeEditableTextWidgetState extends State<ShadeEditableTextWidget> {
       onEnter: (p0) => setState(() => isHovered = true),
       onExit: (p0) => setState(() => isHovered = false),
       child: TextField(
+        controller: controller,
         focusNode: focus,
         onSubmitted: widget.onEditingComplete,
         decoration: InputDecoration(
