@@ -188,11 +188,13 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
       );
     }
 
+    final additionalPaddingForClipRRect = widget.borderStyle == AdvancedContainerBorder.double ? 1.0 : 0.0;
+
     return widget.blur ? ClipRRect(
-      borderRadius: BorderRadius.circular(widget.borderRadius + 1),
+      borderRadius: BorderRadius.circular(widget.borderRadius + additionalPaddingForClipRRect),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 13.0, sigmaY: 13.0, tileMode: TileMode.repeated),
-        child: Padding(padding: const EdgeInsets.all(1), child: container()),
+        child: Padding(padding: EdgeInsets.all(additionalPaddingForClipRRect), child: container()),
       ),
     ) : container();
   }
