@@ -22,8 +22,8 @@ import '../border_padding_presets.dart';
 
 /// A basic container that should be placed straight on top of a background widget.
 ///
-/// The recommended background color is `colorScheme.background`, but multiple
-/// BasicContainers can be stacked on top of eachother.
+/// The recommended background color (to place this widget on) is `colorScheme.surface`.
+/// Multiple [BasicContainer]s can be stacked on top of eachother.
 class BasicContainer extends StatefulWidget {
   final Widget? child;
   final double? width;

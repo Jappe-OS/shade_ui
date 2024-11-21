@@ -16,12 +16,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shade_ui/colors.dart';
-import 'package:shade_ui/extensions.dart';
+import 'package:shade_ui/shade_ui.dart';
 import 'package:shade_ui/text_theme.dart';
-
-import 'constants.dart';
-import 'shade_custom_theme_properties.dart';
 
 /// Contains theme related properties.
 /// From ShadeUI.
@@ -33,54 +29,13 @@ class ShadeTheme {
       ? Colors.black
       : Colors.white;
 
-  static const _kkDividerColorDark = Color.fromARGB(255, 65, 65, 65);
-
   /// Light theme data to assign to [MaterialApp]s 'theme' param.
   static ThemeData light(ShadeCustomThemeProperties t) {
-    final secondary = t.primary.scale(lightness: 0.2).cap(saturation: .9);
-    final secondaryContainer = t.primary.scale(lightness: 0.85).cap(saturation: .5);
-    final tertiary = t.primary.scale(lightness: 0.5).cap(saturation: .8);
-    final tertiaryContainer = t.primary.scale(lightness: 0.75).cap(saturation: .75);
-
-    Color surfaceBackgroundColor(Color base) {
-      if (!t.accentifyColors) return base;
-
-      return base.blend(t.primary, kAccentifyAmount);
-    }
-
-    final accentifiedBackground = surfaceBackgroundColor(ShadeUIColors.porcelain);
-    final outline = accentifiedBackground.blend(Colors.black, 0.2);
-
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: t.primary,
-      error: ShadeUIColors.light.error,
-      onError: Colors.white,
-      brightness: Brightness.light,
-      primary: t.primary,
-      onPrimary: contrastColor(t.primary),
-      primaryContainer: ShadeUIColors.porcelain,
-      onPrimaryContainer: ShadeUIColors.jet,
-      inversePrimary: ShadeUIColors.jet,
-      secondary: secondary,
-      onSecondary: contrastColor(secondary),
-      secondaryContainer: secondaryContainer,
-      onSecondaryContainer: contrastColor(secondaryContainer),
-      background: accentifiedBackground,
-      onBackground: ShadeUIColors.jet,
-      surface: Colors.white,
-      onSurface: ShadeUIColors.jet,
-      inverseSurface: surfaceBackgroundColor(ShadeUIColors.jet),
-      onInverseSurface: surfaceBackgroundColor(ShadeUIColors.porcelain),
-      surfaceTint: ShadeUIColors.warmGrey,
-      surfaceVariant: ShadeUIColors.warmGrey,
-      tertiary: tertiary,
-      onTertiary: contrastColor(tertiary),
-      tertiaryContainer: tertiaryContainer,
-      onTertiaryContainer: contrastColor(tertiaryContainer),
-      onSurfaceVariant: ShadeUIColors.coolGrey,
-      outline: outline,
-      outlineVariant: Colors.black,
-      scrim: Colors.black,
+    var colorScheme = ColorScheme.fromSeed(seedColor: t.primary, brightness: Brightness.light);
+    colorScheme = colorScheme.copyWith(
+      outline: colorScheme.inverseSurface.blend(colorScheme.surface, 0.75),
+      surfaceContainer: colorScheme.surfaceContainer.scale(lightness: -0.03),
+      surfaceContainerLow: colorScheme.surfaceContainerLow.scale(lightness: -0.03),
     );
 
     return _buildTheme(t, colorScheme);
@@ -88,50 +43,11 @@ class ShadeTheme {
 
   /// Dark theme data to assign to [MaterialApp]s 'darkTheme' param.
   static ThemeData dark(ShadeCustomThemeProperties t) {
-    final secondary = t.primary.scale(lightness: -0.3, saturation: -0.15);
-    final secondaryContainer = t.primary.scale(lightness: -0.6, saturation: -0.75).capDown(lightness: .175);
-    final tertiary = t.primary.scale(lightness: -0.5, saturation: -0.25);
-    final tertiaryContainer = t.primary.scale(lightness: -0.5, saturation: -0.65).capDown(lightness: .2);
-
-    Color surfaceBackgroundColor(Color base) {
-      if (!t.accentifyColors) return base;
-
-      return base.blend(t.primary, kAccentifyAmount);
-    }
-
-    final accentifiedBackground = surfaceBackgroundColor(ShadeUIColors.darkJet);
-    final outline = accentifiedBackground.blend(Colors.white, 0.2);
-
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: t.primary,
-      error: ShadeUIColors.dark.error,
-      onError: Colors.white,
-      brightness: Brightness.dark,
-      primary: t.primary,
-      primaryContainer: ShadeUIColors.coolGrey,
-      onPrimary: contrastColor(t.primary),
-      onPrimaryContainer: ShadeUIColors.porcelain,
-      inversePrimary: ShadeUIColors.porcelain,
-      secondary: secondary,
-      onSecondary: contrastColor(t.primary.scale(lightness: -0.25)),
-      secondaryContainer: secondaryContainer,
-      onSecondaryContainer: Colors.white,
-      background: accentifiedBackground,
-      onBackground: ShadeUIColors.porcelain,
-      surface: ShadeUIColors.jet,
-      onSurface: ShadeUIColors.porcelain,
-      inverseSurface: surfaceBackgroundColor(ShadeUIColors.porcelain),
-      onInverseSurface: surfaceBackgroundColor(ShadeUIColors.inkstone),
-      surfaceTint: ShadeUIColors.coolGrey,
-      surfaceVariant: const Color.fromARGB(255, 34, 34, 34),
-      tertiary: tertiary,
-      onTertiary: ShadeUIColors.porcelain,
-      tertiaryContainer: tertiaryContainer,
-      onTertiaryContainer: ShadeUIColors.porcelain,
-      onSurfaceVariant: ShadeUIColors.warmGrey,
-      outline: outline,
-      outlineVariant: Colors.white,
-      scrim: Colors.black,
+    var colorScheme = ColorScheme.fromSeed(seedColor: t.primary, brightness: Brightness.dark);
+    colorScheme = colorScheme.copyWith(
+      outline: colorScheme.inverseSurface.blend(colorScheme.surface, 0.75),
+      surfaceContainer: colorScheme.surfaceContainer.scale(lightness: 0.03),
+      surfaceContainerLow: colorScheme.surfaceContainerLow.scale(lightness: 0.03),
     );
 
     return _buildTheme(t, colorScheme);
@@ -144,54 +60,50 @@ class ShadeTheme {
   static ThemeData _buildTheme(ShadeCustomThemeProperties t, ColorScheme colorScheme) {
     // Style Constants
 
-    const buttonMouseCursor = SystemMouseCursors.alias;
+    const buttonMouseCursor = SystemMouseCursors.basic;
 
     final commonButtonStyle = ButtonStyle(
-      padding: const MaterialStatePropertyAll(kButtonPadding),
-      shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(kDefaultBorderRad))),
-      textStyle: const MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.normal)),
-      mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
+      padding: const WidgetStatePropertyAll(kButtonPadding),
+      shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(kDefaultBorderRad))),
+      mouseCursor: const WidgetStatePropertyAll(buttonMouseCursor),
     );
 
     final menuStyle = MenuStyle(
-      surfaceTintColor: MaterialStateColor.resolveWith((states) => colorScheme.isDark ? colorScheme.surfaceVariant : colorScheme.surface),
-      shape: MaterialStateProperty.resolveWith(
+      shape: WidgetStateProperty.resolveWith(
         (states) => RoundedRectangleBorder(
           side: BorderSide(
-            color: colorScheme.onSurface.withOpacity(
-              colorScheme.isLight ? 0.3 : 0.2,
-            ),
+            color: colorScheme.outline,
             width: 1,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(kDefaultBorderRad),
         ),
       ),
-      side: MaterialStateBorderSide.resolveWith(
+      side: WidgetStateBorderSide.resolveWith(
         (states) => BorderSide(
-          color: colorScheme.onSurface.withOpacity(
-            colorScheme.isLight ? 0.3 : 0.2,
-          ),
+          color: colorScheme.outline,
           width: 1,
         ),
       ),
-      elevation: MaterialStateProperty.resolveWith((states) => 1),
-      backgroundColor: MaterialStateProperty.resolveWith((states) => colorScheme.isDark ? colorScheme.surfaceVariant : colorScheme.surface),
+      elevation: const WidgetStatePropertyAll(1),
+      backgroundColor: WidgetStatePropertyAll(colorScheme.surface),
     );
 
     final inputDecorationTheme = () {
-      final fill = colorScheme.isLight
-      ? const Color(0xFFededed)
-      : const Color.fromARGB(255, 40, 40, 40);
-
       return InputDecorationTheme(
-        contentPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 9, top: 10),
+        contentPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 8, top: 8),
         constraints: const BoxConstraints(
           minHeight: kButtonHeight,
           maxHeight: kButtonHeight,
         ),
         filled: true,
-        fillColor: fill,
         isDense: true,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.0,
+            color: colorScheme.outline,
+          ),
+          borderRadius: BorderRadius.circular(kDefaultBorderRad),
+        ),
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 1.0,
@@ -199,85 +111,8 @@ class ShadeTheme {
           ),
           borderRadius: BorderRadius.circular(kDefaultBorderRad),
         ),
-        iconColor: colorScheme.onSurface,
-        helperStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        hintStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        labelStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        suffixStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ).copyWith(
-          color: colorScheme.onSurface.scale(lightness: -0.2),
-        ),
-        prefixStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ).copyWith(
-          color: colorScheme.onSurface.scale(lightness: -0.2),
-        ),
       );
     }();
-
-    // Style Getters
-
-    Color getCheckFillColor(Set<MaterialState> states, ColorScheme colorScheme) {
-      if (!states.contains(MaterialState.disabled)) {
-        if (states.contains(MaterialState.selected)) {
-          return colorScheme.primary;
-        }
-        return colorScheme.onSurface.withOpacity(0.75);
-      }
-      if (states.contains(MaterialState.selected)) {
-        return colorScheme.onSurface.withOpacity(0.2);
-      }
-      return colorScheme.onSurface.withOpacity(0.2);
-    }
-
-    Color getCheckColor(Set<MaterialState> states, ColorScheme colorScheme) {
-      if (!states.contains(MaterialState.disabled)) {
-        return ThemeData.estimateBrightnessForColor(colorScheme.primary) == Brightness.light ? Colors.black : Colors.white;
-      }
-      return ShadeUIColors.warmGrey;
-    }
-
-    Color getSwitchThumbColor(Set<MaterialState> states, ColorScheme colorScheme) {
-      if (states.contains(MaterialState.disabled)) {
-        if (states.contains(MaterialState.selected)) {
-          return colorScheme.onSurface.withOpacity(0.5);
-        }
-        return colorScheme.onSurface.withOpacity(0.5);
-      } else {
-        return colorScheme.onPrimary;
-      }
-    }
-
-    Color getSwitchTrackColor(Set<MaterialState> states, ColorScheme colorScheme) {
-      final uncheckedColor = colorScheme.onSurface.withOpacity(.25);
-      final disabledUncheckedColor = colorScheme.onSurface.withOpacity(.15);
-      final disabledCheckedColor = colorScheme.onSurface.withOpacity(.18);
-
-      if (states.contains(MaterialState.disabled)) {
-        if (states.contains(MaterialState.selected)) {
-          return disabledCheckedColor;
-        }
-        return disabledUncheckedColor;
-      } else {
-        if (states.contains(MaterialState.selected)) {
-          return colorScheme.primary;
-        } else {
-          return uncheckedColor;
-        }
-      }
-    }
 
     final textTheme = createTextTheme(colorScheme.onSurface);
 
@@ -286,18 +121,8 @@ class ShadeTheme {
       colorScheme: colorScheme,
     ).copyWith(
       brightness: colorScheme.brightness,
-      iconTheme: IconThemeData(color: colorScheme.onSurface),
-      primaryIconTheme: IconThemeData(color: colorScheme.onSurface),
-      primaryColor: colorScheme.primary,
-      canvasColor: colorScheme.background,
-      scaffoldBackgroundColor: colorScheme.background,
-      cardColor: colorScheme.surface,
       dividerColor: colorScheme.outline,
-      dialogBackgroundColor: colorScheme.background,
       indicatorColor: colorScheme.primary,
-      applyElevationOverlayColor: colorScheme.isDark,
-      primaryColorDark: colorScheme.isDark ? colorScheme.primary : null,
-      textSelectionTheme: TextSelectionThemeData(cursorColor: colorScheme.onSurface, selectionColor: colorScheme.primary.withOpacity(0.40)),
 
       // Buttons
 
@@ -310,73 +135,61 @@ class ShadeTheme {
 
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: colorScheme.secondary,
-          foregroundColor: colorScheme.onSecondaryContainer,
-          elevation: 0,
-          shadowColor: Colors.transparent,
+          enabledMouseCursor: buttonMouseCursor,
+          disabledMouseCursor: buttonMouseCursor,
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onPrimary,
         ).merge(commonButtonStyle),
       ),
 
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          disabledBackgroundColor: colorScheme.onSurface.withOpacity(0.12),
-          backgroundColor: colorScheme.onSurface.withOpacity(0.1),
-          surfaceTintColor: colorScheme.onSurface.withOpacity(0.1),
-          foregroundColor: colorScheme.onSurface,
-          elevation: 0,
-          shadowColor: Colors.transparent,
-        ).merge(commonButtonStyle),
-      ),
-
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: colorScheme.onSurface,
-        ).merge(commonButtonStyle),
-      ),
-
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          iconColor: colorScheme.primary,
+          enabledMouseCursor: buttonMouseCursor,
+          disabledMouseCursor: buttonMouseCursor,
+          backgroundColor: colorScheme.surfaceContainerLow,
           foregroundColor: colorScheme.primary,
         ).merge(commonButtonStyle),
       ),
 
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: commonButtonStyle,
+      ),
+
+      textButtonTheme: TextButtonThemeData(
+        style: commonButtonStyle,
+      ),
+
       iconButtonTheme: IconButtonThemeData(
         style: IconButton.styleFrom(
-          foregroundColor: colorScheme.onSurface,
-          highlightColor: colorScheme.onSurface.withOpacity(0.05),
-          surfaceTintColor: colorScheme.background,
+          padding: EdgeInsets.zero,
           disabledMouseCursor: buttonMouseCursor,
           enabledMouseCursor: buttonMouseCursor,
+          minimumSize: const Size(kButtonHeight, kButtonHeight),
+          maximumSize: const Size(double.infinity, kButtonHeight),
         ),
       ),
 
-      menuButtonTheme: MenuButtonThemeData(
+      menuButtonTheme: const MenuButtonThemeData(
         style: ButtonStyle(
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          visualDensity: VisualDensity.standard,
           alignment: Alignment.center,
-          textStyle: MaterialStatePropertyAll(textTheme.bodyMedium),
-          mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
+          mouseCursor: WidgetStatePropertyAll(buttonMouseCursor),
+          minimumSize: WidgetStatePropertyAll(Size(50, kButtonHeight)),
+          maximumSize: WidgetStatePropertyAll(Size(double.infinity, kButtonHeight)),
         ),
       ),
 
       segmentedButtonTheme: SegmentedButtonThemeData(
         style: ButtonStyle(
-          padding: const MaterialStatePropertyAll(kButtonPadding),
-          shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(kDefaultBorderRad))),
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
-              return colorScheme.primary.withOpacity(0.4);
-            }
-
-            return Colors.transparent;
-          }),
-          mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
+          padding: const WidgetStatePropertyAll(kButtonPadding),
+          shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(kDefaultBorderRad))),
+          mouseCursor: const WidgetStatePropertyAll(buttonMouseCursor),
         ),
       ),
 
       // Text Input
-
+    
       inputDecorationTheme: inputDecorationTheme,
 
       dropdownMenuTheme: DropdownMenuThemeData(
@@ -386,36 +199,23 @@ class ShadeTheme {
 
       // Slider
 
-      sliderTheme: SliderThemeData(
-        thumbColor: Colors.white,
-        trackHeight: 6,
-        overlayShape: const RoundSliderOverlayShape(overlayRadius: kButtonHeight / 2),
-        overlayColor: colorScheme.primary.withOpacity(colorScheme.isLight ? 0.4 : 0.7),
-        thumbShape: const RoundSliderThumbShape(elevation: 3.0),
-        inactiveTrackColor: colorScheme.onSurface.withOpacity(0.3),
-        mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
+      sliderTheme: const SliderThemeData(
+        trackHeight: 10,
+        overlayShape: RoundSliderOverlayShape(overlayRadius: kButtonHeight / 2),
+        mouseCursor: WidgetStatePropertyAll(buttonMouseCursor),
       ),
 
       // Check
 
-      checkboxTheme: CheckboxThemeData(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(kCheckRadius),
-        ),
-        fillColor: MaterialStateProperty.resolveWith(
-          (states) => getCheckFillColor(states, colorScheme),
-        ),
-        checkColor: MaterialStateProperty.resolveWith(
-          (states) => getCheckColor(states, colorScheme),
-        ),
-        mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
+      checkboxTheme: const CheckboxThemeData(
+        splashRadius: kButtonHeight / 2,
+        mouseCursor: WidgetStatePropertyAll(buttonMouseCursor),
       ),
-      radioTheme: RadioThemeData(
-        fillColor: MaterialStateProperty.resolveWith(
-          (states) => getCheckFillColor(states, colorScheme),
-        ),
-        mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
+
+      radioTheme: const RadioThemeData(
+        mouseCursor: WidgetStatePropertyAll(buttonMouseCursor),
       ),
+
       toggleButtonsTheme: ToggleButtonsThemeData(
         constraints: const BoxConstraints(
           minHeight: kButtonHeight,
@@ -425,22 +225,11 @@ class ShadeTheme {
         ),
         borderRadius: const BorderRadius.all(Radius.circular(kDefaultBorderRad)),
         borderColor: colorScheme.outline,
-        selectedColor: colorScheme.onSurface,
-        fillColor: colorScheme.outline,
-        hoverColor: colorScheme.onSurface.withOpacity(.05),
       ),
-      switchTheme: SwitchThemeData(
+
+      switchTheme: const SwitchThemeData(
         splashRadius: kButtonHeight / 2,
-        trackOutlineColor: MaterialStateColor.resolveWith(
-          (states) => Colors.transparent,
-        ),
-        thumbColor: MaterialStateProperty.resolveWith(
-          (states) => getSwitchThumbColor(states, colorScheme),
-        ),
-        trackColor: MaterialStateProperty.resolveWith(
-          (states) => getSwitchTrackColor(states, colorScheme),
-        ),
-        mouseCursor: const MaterialStatePropertyAll(buttonMouseCursor),
+        mouseCursor: WidgetStatePropertyAll(buttonMouseCursor),
       ),
 
       // Other
@@ -449,9 +238,7 @@ class ShadeTheme {
         shape: Border(
           bottom: BorderSide(
             strokeAlign: -1,
-            color: colorScheme.onSurface.withOpacity(
-              colorScheme.isLight ? 0.2 : 0.07,
-            ),
+            color: colorScheme.surfaceContainerHighest,
           ),
         ),
         scrolledUnderElevation: kAppBarElevation,
@@ -460,10 +247,6 @@ class ShadeTheme {
         systemOverlayStyle: colorScheme.isLight ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
-        titleTextStyle: createTextTheme(colorScheme.onSurface).titleLarge!.copyWith(
-              color: colorScheme.onSurface,
-              fontWeight: FontWeight.normal,
-            ),
         iconTheme: IconThemeData(
           color: colorScheme.onSurface,
           size: kCompactIconSize,
@@ -472,32 +255,25 @@ class ShadeTheme {
         toolbarHeight: kCompactAppBarHeight,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: colorScheme.primary,
-        foregroundColor: contrastColor(colorScheme.primary),
+        mouseCursor: const WidgetStatePropertyAll(buttonMouseCursor),
+        backgroundColor: colorScheme.surfaceContainerLow,
+        foregroundColor: colorScheme.onSurface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-          side: BorderSide.none,
+          borderRadius: BorderRadius.circular(kDefaultBorderRad * 2),
+          side: BorderSide(color: colorScheme.outline, width: 1),
         ),
-        elevation: 3.0,
+        elevation: 1.0,
         focusElevation: 3.0,
         hoverElevation: 3.0,
-        disabledElevation: 3.0,
+        disabledElevation: 1.0,
         highlightElevation: 3.0,
-      ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.onSurface.withOpacity(0.8),
       ),
       menuTheme: MenuThemeData(style: menuStyle),
       popupMenuTheme: PopupMenuThemeData(
-        color: colorScheme.isDark ? colorScheme.surfaceVariant : colorScheme.surface,
-        surfaceTintColor: colorScheme.isDark ? colorScheme.surfaceVariant : colorScheme.surface,
         shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(kDefaultBorderRad),
           borderSide: BorderSide(
-            color: colorScheme.onSurface.withOpacity(
-              colorScheme.isLight ? 0.3 : 0.2,
-            ),
+            color: colorScheme.outline,
             width: 1,
           ),
         ),
@@ -505,21 +281,7 @@ class ShadeTheme {
       tooltipTheme: const TooltipThemeData(
         waitDuration: Duration(milliseconds: 500),
       ),
-      bottomAppBarTheme: BottomAppBarTheme(color: colorScheme.surface),
-      navigationBarTheme: NavigationBarThemeData(
-        height: kCompactNavigationBarHeight,
-        backgroundColor: colorScheme.surface,
-        surfaceTintColor: colorScheme.surface,
-        indicatorColor: colorScheme.onSurface.withOpacity(0.1),
-        iconTheme: MaterialStateProperty.resolveWith(
-          (states) => states.contains(MaterialState.selected)
-              ? IconThemeData(color: colorScheme.onSurface)
-              : IconThemeData(color: colorScheme.onSurface.withOpacity(0.8)),
-        ),
-      ),
       navigationRailTheme: NavigationRailThemeData(
-        backgroundColor: colorScheme.surface,
-        indicatorColor: colorScheme.onSurface.withOpacity(0.1),
         selectedIconTheme: IconThemeData(
           color: colorScheme.onSurface,
           size: kCompactIconSize,
@@ -529,87 +291,45 @@ class ShadeTheme {
           size: kCompactIconSize,
         ),
       ),
-      dividerTheme: DividerThemeData(color: colorScheme.outline, space: 1.0, thickness: 0.0),
-      badgeTheme: BadgeThemeData(
-        backgroundColor: colorScheme.primary,
-        textColor: contrastColor(colorScheme.primary),
-      ),
+      dividerTheme: DividerThemeData(color: colorScheme.outline/*, space: 1.0, thickness: 0.0*/),
       scrollbarTheme: const ScrollbarThemeData(
         mainAxisMargin: 3.0,
         crossAxisMargin: 3.0,
       ),
-      drawerTheme: DrawerThemeData(
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadiusDirectional.only(
-            topEnd: Radius.circular(kWindowRadius),
-            bottomEnd: Radius.circular(kWindowRadius),
-          ),
-          side: BorderSide(
-            color: colorScheme.isLight ? Colors.transparent : _kkDividerColorDark,
-          ),
-        ),
-        backgroundColor: colorScheme.background,
-      ),
-      listTileTheme: ListTileThemeData(
-        iconColor: colorScheme.onSurface.withOpacity(0.8),
-      ),
-      snackBarTheme: SnackBarThemeData(
+      snackBarTheme: const SnackBarThemeData(
         width: kSnackBarWidth,
-        backgroundColor: const Color.fromARGB(255, 20, 20, 20).withOpacity(0.95),
-        closeIconColor: Colors.white,
-        actionTextColor: Colors.white,
-        contentTextStyle: const TextStyle(color: Colors.white),
-        actionBackgroundColor: Colors.transparent,
-        disabledActionTextColor: Colors.white.withOpacity(0.7),
-        disabledActionBackgroundColor: Colors.transparent,
         behavior: SnackBarBehavior.floating,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(kButtonHeight),
-        ),
-      ),
-      chipTheme: ChipThemeData(selectedColor: colorScheme.primary.withOpacity(.4)),
-      progressIndicatorTheme: ProgressIndicatorThemeData(
-        circularTrackColor: colorScheme.primary.withOpacity(0.3),
-        linearTrackColor: colorScheme.primary.withOpacity(0.3),
-        color: colorScheme.primary,
+        elevation: 1,
       ),
       menuBarTheme: const MenuBarThemeData(
         style: MenuStyle(
-          minimumSize: MaterialStatePropertyAll(Size(0, kButtonHeight)),
-          maximumSize: MaterialStatePropertyAll(Size(double.infinity, kButtonHeight)),
-          shadowColor: MaterialStatePropertyAll(Colors.black),
-          elevation: MaterialStatePropertyAll(2),
+          shape: WidgetStatePropertyAll(LinearBorder()),
+          minimumSize: WidgetStatePropertyAll(Size(0, kButtonHeight)),
+          maximumSize: WidgetStatePropertyAll(Size(double.infinity, kButtonHeight)),
+          shadowColor: WidgetStatePropertyAll(Colors.black),
+          elevation: WidgetStatePropertyAll(2),
         ),
       ),
       tabBarTheme: TabBarTheme(
-        labelColor: colorScheme.isLight ? colorScheme.onSurface : Colors.white.withOpacity(0.8),
-        indicatorColor: colorScheme.primary,
+        mouseCursor: const WidgetStatePropertyAll(buttonMouseCursor),
         dividerColor: colorScheme.outline,
-        overlayColor: MaterialStateColor.resolveWith(
-          (states) => colorScheme.onSurface.withOpacity(0.05),
-        ),
       ),
       dialogTheme: DialogTheme(
-        backgroundColor: colorScheme.brightness == Brightness.dark ? ShadeUIColors.darkJet : ShadeUIColors.porcelain,
-        surfaceTintColor: colorScheme.brightness == Brightness.dark ? ShadeUIColors.darkJet : ShadeUIColors.porcelain,
+        elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(kWindowRadius),
-          side: colorScheme.isDark
-              ? BorderSide(
-                  color: Colors.white.withOpacity(0.2),
-                )
-              : BorderSide.none,
+          side: BorderSide(
+            color: colorScheme.outline,
+            width: 1,
+          ),
         ),
+      ),
+      listTileTheme: const ListTileThemeData(
+        dense: true,
+        mouseCursor: WidgetStatePropertyAll(buttonMouseCursor),
+        contentPadding: EdgeInsets.symmetric(horizontal: BPPresets.small, vertical: 0),
       ),
       textTheme: textTheme,
     );
   }
 }
-
-//class ShadeThemeWidgets extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    
-//  }
-//}

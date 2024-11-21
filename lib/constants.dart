@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 const kAccentifyAmount = 0.185;
 const kDefaultBorderRad = 7.0;
-const kButtonHeight = 35.0;
-const kButtonPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 15.5);
+const kButtonHeight = 32.0;
+const kButtonPaddingHoriz = 20.0;
+const kButtonPaddingVert = kButtonHeight / 2.25806452;
+const kButtonPadding = EdgeInsets.symmetric(horizontal: kButtonPaddingHoriz, vertical: kButtonPaddingVert);
 const kCheckRadius = 3.0;
 const kCompactIconSize = 20.0;
 const kAppBarElevation = 0.0;

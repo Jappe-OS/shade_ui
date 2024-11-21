@@ -103,7 +103,7 @@ class _ShadeTextStyle extends TextStyle {
     super.fontWeight,
     required this.textColor,
   }) : super(
-          fontFamily: 'Nunito',
+          fontFamily: 'Inter',
           package: 'shade_ui',
           color: textColor,
         );

@@ -20,12 +20,11 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:shade_ui/colors.dart';
-import 'package:shade_ui/extensions.dart';
 import 'package:shade_ui/shade_ui.dart';
 
-const _defaultHeaderBarHeight = 35.0;
-const _populatedHeaderbarHeight = 45.0;
+const _kHeaderBarHeroTag = '<shadeui headerbar hero tag>';
+const _kDefaultHeaderBarHeight = 35.0;
+const _kPopulatedHeaderbarHeight = 45.0;
 
 class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   /// The primary title widget.
@@ -41,7 +40,7 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   final bool? centerTitle;
 
   /// Spacing around the title.
-  final double? titleSpacing;
+  final double titleSpacing;
 
   /// The background color.
   final Color? backgroundColor;
@@ -97,7 +96,7 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
   final Object? heroTag;
 
   @override
-  Size get preferredSize => Size(0, (leading == null && actions == null) ? _defaultHeaderBarHeight : _populatedHeaderbarHeight);
+  Size get preferredSize => Size(0, (leading == null && actions == null) ? _kDefaultHeaderBarHeight : _kPopulatedHeaderbarHeight);
 
   const ShadeHeaderBar(
       {super.key,
@@ -105,7 +104,7 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
       this.leading,
       this.actions,
       this.centerTitle = true,
-      this.titleSpacing,
+      this.titleSpacing = BPPresets.medium,
       this.backgroundColor,
       this.isActive,
       this.isClosable,
@@ -121,7 +120,7 @@ class ShadeHeaderBar extends StatefulWidget implements PreferredSizeWidget {
       this.onMinimize,
       this.onRestore,
       this.onShowMenu,
-      this.heroTag});
+      this.heroTag = _kHeaderBarHeroTag});
 
   @override
   _ShadeHeaderBarState createState() => _ShadeHeaderBarState();
@@ -132,16 +131,16 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final light = theme.colorScheme.isLight;
-    final states = <MaterialState>{
-      if (widget.isActive != false) MaterialState.focused,
+    final states = <WidgetState>{
+      if (widget.isActive != false) WidgetState.focused,
     };
-    final defaultBackgroundColor = MaterialStateProperty.resolveWith((states) {
-      if (!states.contains(MaterialState.focused)) {
-        return theme.colorScheme.background;
+    final defaultBackgroundColor = WidgetStateProperty.resolveWith((states) {
+      if (!states.contains(WidgetState.focused)) {
+        return theme.colorScheme.surface;
       }
       return light ? ShadeUIColors.titleBarLight : ShadeUIColors.titleBarDark;
     });
-    final backgroundColor = MaterialStateProperty.resolveAs(widget.backgroundColor, states) ?? defaultBackgroundColor.resolve(states);
+    final backgroundColor = WidgetStateProperty.resolveAs(widget.backgroundColor, states) ?? defaultBackgroundColor.resolve(states);
     final foregroundColor = theme.colorScheme.onSurface;
 
     final titleTextStyle = (theme.appBarTheme.titleTextStyle ?? theme.textTheme.titleLarge!).copyWith(
@@ -154,7 +153,7 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
       strokeAlign: -1,
       color: light ? Colors.black.withOpacity(0.1) : Colors.white.withOpacity(0.06),
     );
-    final border = Border(bottom: defaultBorder);
+    final border = Border(bottom: widget.backgroundColor == Colors.transparent ? BorderSide.none : defaultBorder);
     final shape = border + (const Border());
 
     const bSpacing = 0.0;
@@ -189,6 +188,42 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
 
     final gestureSettings = MediaQuery.maybeOf(context)?.gestureSettings;
 
+    Widget buildWindowControls() => Padding(
+      padding: bPadding,
+      child: SpacedRow(
+        spacing: bSpacing,
+        children: [
+          if (widget.isMinimizable == true)
+            _ShadeWindowControl(
+              foregroundColor: foregroundColor,
+              icon: Icons.minimize_sharp,
+              onTap: widget.onMinimize != null ? () => widget.onMinimize!(context) : null,
+            ),
+          if (widget.isRestorable == true)
+            _ShadeWindowControl(
+              foregroundColor: foregroundColor,
+              icon: Icons.fullscreen_exit_sharp,
+              onTap: widget.onRestore != null ? () => widget.onRestore!(context) : null,
+            ),
+          if (widget.isMaximizable == true)
+            _ShadeWindowControl(
+              foregroundColor: foregroundColor,
+              icon: Icons.square_outlined,
+              onTap: widget.onMaximize != null ? () => widget.onMaximize!(context) : null,
+            ),
+          if (widget.isClosable == true)
+            widget.isMaximizable == true
+                ? closeButton
+                : ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(6),
+                    ),
+                    child: closeButton,
+                  ),
+        ],
+      ),
+    );
+
     return TextFieldTapRegion(
       child: RawGestureDetector(
         behavior: HitTestBehavior.translucent,
@@ -203,16 +238,16 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
               ..onUpdate = ((p0) => widget.onDrag?.call(context, p0))
           ),
           _PassiveTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<_PassiveTapGestureRecognizer>(
-              _PassiveTapGestureRecognizer.new,
-              (instance) => instance
-                ..onDoubleTap = (() => widget.isMaximizable == true
-                    ? widget.onMaximize?.call(context)
-                    : widget.isRestorable == true
-                        ? widget.onRestore?.call(context)
-                        : null)
-                ..onSecondaryTap = widget.onShowMenu != null ? () => widget.onShowMenu!(context) : null
-                ..gestureSettings = gestureSettings,
-              ),
+            _PassiveTapGestureRecognizer.new,
+            (instance) => instance
+              ..onDoubleTap = (() => widget.isMaximizable == true
+                  ? widget.onMaximize?.call(context)
+                  : widget.isRestorable == true
+                      ? widget.onRestore?.call(context)
+                      : null)
+              ..onSecondaryTap = widget.onShowMenu != null ? () => widget.onShowMenu!(context) : null
+              ..gestureSettings = gestureSettings,
+          ),
         },
         child: AppBar(
           elevation: 0,
@@ -220,8 +255,8 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
           leading: backdropEffect(widget.leading),
           title: backdropEffect(widget.title),
           centerTitle: widget.centerTitle,
-          titleSpacing: widget.titleSpacing ?? BPPresets.medium,
-          toolbarHeight: (widget.leading == null && widget.actions == null) ? _defaultHeaderBarHeight : _populatedHeaderbarHeight,
+          titleSpacing: widget.titleSpacing,
+          toolbarHeight: (widget.leading == null && widget.actions == null) ? _kDefaultHeaderBarHeight : _kPopulatedHeaderbarHeight,
           foregroundColor: foregroundColor,
           backgroundColor: backgroundColor,
           titleTextStyle: titleTextStyle,
@@ -233,41 +268,12 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ...?widget.actions,
-                    if (widget.isMinimizable == true || widget.isRestorable == true || widget.isMaximizable == true || widget.isClosable == true)
-                      Padding(
-                        padding: bPadding,
-                        child: Row(
-                          children: [
-                            if (widget.isMinimizable == true)
-                              _ShadeWindowControl(
-                                foregroundColor: foregroundColor,
-                                icon: Icons.minimize_sharp,
-                                onTap: widget.onMinimize != null ? () => widget.onMinimize!(context) : null,
-                              ),
-                            if (widget.isRestorable == true)
-                              _ShadeWindowControl(
-                                foregroundColor: foregroundColor,
-                                icon: Icons.fullscreen_exit_sharp,
-                                onTap: widget.onRestore != null ? () => widget.onRestore!(context) : null,
-                              ),
-                            if (widget.isMaximizable == true)
-                              _ShadeWindowControl(
-                                foregroundColor: foregroundColor,
-                                icon: Icons.square_outlined,
-                                onTap: widget.onMaximize != null ? () => widget.onMaximize!(context) : null,
-                              ),
-                            if (widget.isClosable == true)
-                              widget.isMaximizable == true
-                                  ? closeButton
-                                  : ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(6),
-                                      ),
-                                      child: closeButton,
-                                    ),
-                          ].withSpacing(bSpacing),
-                        ),
-                      ),
+                    //
+                    if (widget.isMinimizable == true ||
+                        widget.isRestorable == true || 
+                        widget.isMaximizable == true || 
+                        widget.isClosable == true)
+                        buildWindowControls(),
                   ],
                 ),
               )!,
@@ -276,15 +282,6 @@ class _ShadeHeaderBarState extends State<ShadeHeaderBar> {
         ),
       ),
     );
-  }
-}
-
-extension _ListSpacing on List<Widget> {
-  List<Widget> withSpacing(double spacing) {
-    return expand((item) sync* {
-      yield SizedBox(width: spacing);
-      yield item;
-    }).skip(1).toList();
   }
 }
 

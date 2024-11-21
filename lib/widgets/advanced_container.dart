@@ -32,7 +32,10 @@ enum AdvancedContainerBorder {
 
 /// Controls the background color of an [AdvancedContainer].
 enum AdvancedContainerBackground {
-  /// Use ontop of a container that uses `colorScheme.onBackground` as it's background color.
+  /// Use ontop of a container that uses `colorScheme.surface` as it's background color,
+  /// like an [AdvancedContainer] where `background` is set to [AdvancedContainerBackground.solidBackground]
+  /// or [AdvancedContainerBackground.transparentBackground].
+  /// 
   /// [AdvancedContainer]s with `addOnBackground` can also be stacked on top of eachother if needed.
   addOnBackground,
 
@@ -125,6 +128,66 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
       ));
     }
 
+    final outerBorderColor = Colors.black.withOpacity(0.7);
+    final innerBorderColor = Theme.of(context).colorScheme.onInverseSurface.blend(Colors.white, 0.3);
+
+    Widget containerNew() {
+      return Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          border: widget.borderStyle == AdvancedContainerBorder.double ? Border.all(
+            color: outerBorderColor,
+            width: 1.0,
+            strokeAlign: BorderSide.strokeAlignOutside,
+          ) : null,
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          boxShadow: shadows,
+          image: widget.blur ? const DecorationImage(
+            image: AssetImage(
+              "resources/images/blur_noise.png",
+              package: "shade_ui",
+            ),
+            fit: BoxFit.none,
+            repeat: ImageRepeat.repeat,
+            scale: 7,
+            opacity: 0.038,
+          ) : null,
+        ),
+        foregroundDecoration: BoxDecoration(
+          color: () {
+            switch (widget.background) {
+              case AdvancedContainerBackground.addOnBackground:
+                return (Theme.of(context).brightness == Brightness.light
+                    ? Colors.black.withOpacity(_bgColorDelta)
+                    : Colors.white.withOpacity(_bgColorDelta));
+              case AdvancedContainerBackground.solidBackground:
+                return Theme.of(context).colorScheme.surface;
+              case AdvancedContainerBackground.transparentBackground:
+                return Theme.of(context).colorScheme.surface.withOpacity(0.85);
+              case AdvancedContainerBackground.custom:
+                return widget.backgroundColor;
+            }
+          }(),
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          border: () {
+            if (widget.borderStyle == AdvancedContainerBorder.single) {
+              return Border.all(color: widget.borderColor ?? Theme.of(context).dividerColor, width: 1.0, strokeAlign: BorderSide.strokeAlignInside);
+            } else if (widget.borderStyle == AdvancedContainerBorder.double) {
+              return Border.all(
+                color: widget.borderColor ?? innerBorderColor,
+                width: 0.5,
+                strokeAlign: BorderSide.strokeAlignInside + 0.5,
+              );
+            }
+
+            return null;
+          }(),
+        ),
+        child: widget.padding != null ? Padding(padding: widget.padding!, child: widget.child) : widget.child,
+      );
+    }
+
     Widget container() {
       return Container(
         width: widget.width,
@@ -149,9 +212,9 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
                       ? Colors.black.withOpacity(_bgColorDelta)
                       : Colors.white.withOpacity(_bgColorDelta));
                 case AdvancedContainerBackground.solidBackground:
-                  return Theme.of(context).colorScheme.background;
+                  return Theme.of(context).colorScheme.surface;
                 case AdvancedContainerBackground.transparentBackground:
-                  return Theme.of(context).colorScheme.background.withOpacity(0.85);
+                  return Theme.of(context).colorScheme.surface.withOpacity(0.85);
                 case AdvancedContainerBackground.custom:
                   return widget.backgroundColor;
               }
@@ -190,8 +253,8 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
       borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 13.0, sigmaY: 13.0, tileMode: TileMode.repeated),
-        child: container(),
+        child: containerNew(),
       ),
-    ) : container();
+    ) : containerNew();
   }
 }

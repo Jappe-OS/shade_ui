@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   menu_bar: ^0.5.3
   provider: ^6.0.3
+  yaru_window: ^0.2.1+1
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +26,9 @@ flutter:
     - resources/images/
 
   fonts:
+    - family: Inter
+      fonts:
+        - asset: resources/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf
     - family: Nunito
       fonts:
         - asset: resources/fonts/Nunito/Nunito-ExtraLight.ttf
