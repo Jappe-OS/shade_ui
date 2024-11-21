@@ -138,7 +138,7 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
         decoration: BoxDecoration(
           border: widget.borderStyle == AdvancedContainerBorder.double ? Border.all(
             color: outerBorderColor,
-            width: 2.0,
+            width: 1.0,
             strokeAlign: BorderSide.strokeAlignOutside,
           ) : null,
           borderRadius: BorderRadius.circular(widget.borderRadius),
@@ -189,10 +189,10 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
     }
 
     return widget.blur ? ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
+      borderRadius: BorderRadius.circular(widget.borderRadius + 1),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 13.0, sigmaY: 13.0, tileMode: TileMode.repeated),
-        child: container(),
+        child: Padding(padding: const EdgeInsets.all(1), child: container()),
       ),
     ) : container();
   }
