@@ -131,7 +131,7 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
     final outerBorderColor = Colors.black.withOpacity(0.7);
     final innerBorderColor = Theme.of(context).colorScheme.onInverseSurface.blend(Colors.white, 0.3);
 
-    Widget containerNew() {
+    Widget container() {
       return Container(
         width: widget.width,
         height: widget.height,
@@ -153,8 +153,6 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
             scale: 7,
             opacity: 0.038,
           ) : null,
-        ),
-        foregroundDecoration: BoxDecoration(
           color: () {
             switch (widget.background) {
               case AdvancedContainerBackground.addOnBackground:
@@ -169,6 +167,8 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
                 return widget.backgroundColor;
             }
           }(),
+        ),
+        foregroundDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.borderRadius),
           border: () {
             if (widget.borderStyle == AdvancedContainerBorder.single) {
@@ -188,73 +188,12 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
       );
     }
 
-    Widget container() {
-      return Container(
-        width: widget.width,
-        height: widget.height,
-        decoration: widget.borderStyle == AdvancedContainerBorder.double
-            ? BoxDecoration(
-                border: Border.all(
-                  color: Colors.black.withOpacity(0.7),
-                  width: 1.0,
-                  strokeAlign: BorderSide.strokeAlignInside,
-                ),
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-                boxShadow: shadows,
-              )
-            : null,
-        child: Container(
-          decoration: BoxDecoration(
-            color: () {
-              switch (widget.background) {
-                case AdvancedContainerBackground.addOnBackground:
-                  return (Theme.of(context).brightness == Brightness.light
-                      ? Colors.black.withOpacity(_bgColorDelta)
-                      : Colors.white.withOpacity(_bgColorDelta));
-                case AdvancedContainerBackground.solidBackground:
-                  return Theme.of(context).colorScheme.surface;
-                case AdvancedContainerBackground.transparentBackground:
-                  return Theme.of(context).colorScheme.surface.withOpacity(0.85);
-                case AdvancedContainerBackground.custom:
-                  return widget.backgroundColor;
-              }
-            }(),
-            borderRadius: BorderRadius.circular(widget.borderRadius - 1),
-            border: () {
-              if (widget.borderStyle == AdvancedContainerBorder.single) {
-                return Border.all(color: widget.borderColor ?? Theme.of(context).dividerColor, width: 1.0, strokeAlign: BorderSide.strokeAlignInside);
-              } else if (widget.borderStyle == AdvancedContainerBorder.double) {
-                return Border.all(
-                  color: widget.borderColor ?? (Theme.of(context).colorScheme.onInverseSurface.blend(Colors.white, 0.3)),
-                  width: 0.5,
-                  strokeAlign: BorderSide.strokeAlignInside - 0.5,
-                );
-              }
-
-              return null;
-            }(),
-            image: widget.blur ? const DecorationImage(
-              image: AssetImage(
-                "resources/images/blur_noise.png",
-                package: "shade_ui",
-              ),
-              fit: BoxFit.none,
-              repeat: ImageRepeat.repeat,
-              scale: 7,
-              opacity: 0.038,
-            ) : null,
-          ),
-          child: widget.padding != null ? Padding(padding: widget.padding!, child: widget.child) : widget.child,
-        ),
-      );
-    }
-
     return widget.blur ? ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 13.0, sigmaY: 13.0, tileMode: TileMode.repeated),
-        child: containerNew(),
+        child: container(),
       ),
-    ) : containerNew();
+    ) : container();
   }
 }
