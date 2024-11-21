@@ -138,7 +138,7 @@ class _AdvancedContainerState extends State<AdvancedContainer> {
         decoration: BoxDecoration(
           border: widget.borderStyle == AdvancedContainerBorder.double ? Border.all(
             color: outerBorderColor,
-            width: 1.0,
+            width: 2.0,
             strokeAlign: BorderSide.strokeAlignOutside,
           ) : null,
           borderRadius: BorderRadius.circular(widget.borderRadius),
