@@ -19,6 +19,7 @@ library shadeui.widgets;
 export 'advanced_container.dart';
 export 'basic_container.dart';
 export 'shade_app.dart';
+export 'shade_container.dart';
 export 'shade_editable_text_widget.dart';
 export 'shade_header_bar.dart';
 export 'shade_selection_border.dart';
