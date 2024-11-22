@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
 /*
 Credit: ubuntu/yaru.dart
 https://github.com/ubuntu/yaru.dart/
@@ -77,6 +79,11 @@ class ShadeUIColors {
 
 /// Set of useful methods when working with [Color]
 extension ShadeUIColorExtension on Color {
+  /// Get a transparent version of this color for use with blurred semi-transparent surfaces.
+  Color transparentVersion() {
+    return withOpacity(kTransparentVerOp);
+  }
+
   /// Blend this color with the [other] color with the specified [amount].
   Color blend(Color other, double amount) {
     int blendedRed = (red + (other.red - red) * amount).round();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kAccentifyAmount = 0.185;
+const kTransparentVerOp = 0.85;
 const kDefaultBorderRad = 7.0;
 const kButtonHeight = 32.0;
 const kButtonPaddingHoriz = 20.0;

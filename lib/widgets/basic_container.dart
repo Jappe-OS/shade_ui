@@ -24,6 +24,7 @@ import '../border_padding_presets.dart';
 ///
 /// The recommended background color (to place this widget on) is `colorScheme.surface`.
 /// Multiple [BasicContainer]s can be stacked on top of eachother.
+@Deprecated("Use ShadeContainer instead.")
 class BasicContainer extends StatefulWidget {
   final Widget? child;
   final double? width;

@@ -51,6 +51,7 @@ enum AdvancedContainerBackground {
 
 // TODO: Blend border with accent if the backgroud color is accentified.
 /// An advanced version of [BasicContainer] that provides more features and customizability.
+@Deprecated("Use ShadeContainer instead.")
 class AdvancedContainer extends StatefulWidget {
   final Widget? child;
   final double? width;
